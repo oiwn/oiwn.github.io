@@ -70,6 +70,9 @@
     <h2>Не забывайте про индексы</h2>
   </div>
 </header>
+
+<p class="text-right"><small>2013-07-17 02:33</small></p>
+
 <p>Часто на этом залипают новички, т.е. создается база данных, затем туда скрипт начинает писать данные, все медленнее, медлееннее и в конце концов каждый инсерт занимает столько времени, что работать с БД становится невозможно. Происходит это из-за примерно таких вот конструкций (псеводокод a la python).</p>
 <div class="codehilite"><pre><span class="n">item_obj</span> <span class="o">=</span> <span class="n">Item</span><span class="p">.</span><span class="n">objects</span><span class="p">(</span><span class="n">item_id</span><span class="o">=</span><span class="n">item_id</span><span class="p">).</span><span class="n">first</span><span class="p">()</span>
 <span class="k">if</span> <span class="n">item_obj</span> <span class="n">is</span> <span class="n">None</span><span class="o">:</span>
@@ -117,13 +120,20 @@
                             <h2>Sidebar</h2>
                         </div>
                         
-
 <ul class="nav nav-pills nav-stacked">
 	
 		
 		<li >
 			<a href="/category/cool-story-bro/">
 				cool-story-bro
+			</a>
+		</li>
+		
+	
+		
+		<li >
+			<a href="/category/linux/">
+				linux
 			</a>
 		</li>
 		
@@ -145,26 +155,32 @@
 		
 	
  </ul>
-
 <hr>
-
-<div class=tags>
-  	<ul>
+<div class="tags">
+  	<ul class="list-unstyled">
 	
 		<li class="tagRank10">
 			<a href="/tag/sqlite/" title="sqlite">sqlite</a>
 		</li>
 	
 		<li class="tagRank9">
-			<a href="/tag/sqlalchemy/" title="sqlalchemy">sqlalchemy</a>
+			<a href="/tag/sqlalchemy/" title="sqlalchemy"><b class="current-tag">sqlalchemy</b></a>
 		</li>
 	
 		<li class="tagRank10">
-			<a href="/tag/mongodb/" title="mongodb">mongodb</a>
+			<a href="/tag/mongodb/" title="mongodb"><b class="current-tag">mongodb</b></a>
 		</li>
 	
 		<li class="tagRank10">
 			<a href="/tag/functional-programming/" title="functional-programming">functional-programming</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/linux/" title="linux">linux</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/server/" title="server">server</a>
 		</li>
 	
 		<li class="tagRank10">
@@ -188,7 +204,7 @@
 		</li>
 	
 		<li class="tagRank9">
-			<a href="/tag/databases/" title="databases">databases</a>
+			<a href="/tag/databases/" title="databases"><b class="current-tag">databases</b></a>
 		</li>
 	
 		<li class="tagRank9">
@@ -217,7 +233,6 @@
 	
 	</ul>
 </div>
-
 
                     </div>                  
                 </div>

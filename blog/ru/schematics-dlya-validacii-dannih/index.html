@@ -70,22 +70,25 @@
     <h2>Использование Schematics для валидации данных</h2>
   </div>
 </header>
+
+<p class="text-right"><small>2013-08-02 21:23</small></p>
+
 <p>Все эти веб приложения и вебсайты по сути <em>умная</em> прослойка между базой данных и клиентом, какие-то данные идут от сервера к клиенту, какие-то от клиента на сервер. Обновить запись в базе данных? Браузер пользователя должен отправить форму или клиент сделать PUT к API. В любом случае необходимо или хотя бы очень желательно проверять соответствуют ли данные требуемой структуре, или пришла какая-то ерунда. Короче говоря имеется типичная задача - валидация данных, перед тем как отправить их дальше, особенно это актуально для schema-less баз данных, таких как MongoDB. Данные предварительно можно валидировать само собой и на клиенте, но это легко обходится используя curl или какой-нибудь плагин к браузеру (вроде RESTClient для FF). Поэтому основная борьба за чистоту данных и свободу от ошибок идет на server-side. Если вы используете комплексный фрэймворк вроде Django, то там скорее всего уже есть возможность проводить валидацию, на уровне форм и моделей. Но если вы используете один из множества микрофрэймворков, то скорее всего встроенной возможности для валидации нет.</p>
 <p>Вот как раз для таких случаев есть готовое <em>"standalone"</em> решение - <strong><a href="schematics">https://github.com/j2labs/schematics</a></strong></p>
-<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">from</span> <span class="n">schematics</span><span class="p">.</span><span class="n">models</span> <span class="n">import</span> <span class="n">Model</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">from</span> <span class="n">schematics</span><span class="p">.</span><span class="n">types</span> <span class="n">import</span> <span class="n">StringType</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">class</span> <span class="n">Person</span><span class="p">(</span><span class="n">Model</span><span class="p">)</span><span class="o">:</span>
-<span class="p">...</span>     <span class="n">name</span> <span class="o">=</span> <span class="n">StringType</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="n">True</span><span class="p">)</span>
-<span class="p">...</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">person</span> <span class="o">=</span> <span class="n">Person</span><span class="p">({</span><span class="s">&quot;name&quot;</span><span class="o">:</span> <span class="n">u</span><span class="s">&quot;Dino Spomoni&quot;</span><span class="p">})</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">person</span><span class="p">.</span><span class="n">name</span>
-<span class="n">u</span><span class="s">&quot;Dino Spomoni&quot;</span>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">schematics.models</span> <span class="kn">import</span> <span class="n">Model</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">schematics.types</span> <span class="kn">import</span> <span class="n">StringType</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">class</span> <span class="nc">Person</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+<span class="o">...</span>     <span class="n">name</span> <span class="o">=</span> <span class="n">StringType</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="o">...</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">person</span> <span class="o">=</span> <span class="n">Person</span><span class="p">({</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">u&quot;Dino Spomoni&quot;</span><span class="p">})</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">person</span><span class="o">.</span><span class="n">name</span>
+<span class="s">u&quot;Dino Spomoni&quot;</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">person</span> <span class="o">=</span> <span class="n">Person</span><span class="p">()</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">try</span><span class="o">:</span>
-<span class="p">...</span>     <span class="n">person</span><span class="p">.</span><span class="n">validate</span><span class="p">()</span>
-<span class="p">...</span> <span class="n">except</span> <span class="n">ValidationError</span><span class="p">,</span> <span class="n">e</span><span class="o">:</span>
-<span class="p">...</span>     <span class="n">print</span> <span class="n">e</span><span class="p">.</span><span class="n">messages</span>
-<span class="p">{</span><span class="s">&quot;name&quot;</span><span class="o">:</span> <span class="p">[</span><span class="n">u</span><span class="s">&quot;This field is required.&quot;</span><span class="p">]}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">try</span><span class="p">:</span>
+<span class="o">...</span>     <span class="n">person</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
+<span class="o">...</span> <span class="k">except</span> <span class="n">ValidationError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+<span class="o">...</span>     <span class="k">print</span> <span class="n">e</span><span class="o">.</span><span class="n">messages</span>
+<span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s">u&quot;This field is required.&quot;</span><span class="p">]}</span>
 </pre></div>
 
 
@@ -99,14 +102,14 @@
 </ul>
 <p>С учетом того, что schematics весьма просто расширяется и можно писать собственные валидаторы, то область применения может быть гораздо шире чем я предполагаю.</p>
 <p>И в конце, "живой" пример кастомного валидатора из реального проекта. Проверяет содержит ли логин пользователя что-то кроме цифр, букв и символов _ и -.</p>
-<div class="codehilite"><pre><span class="n">def</span> <span class="n">validate_login</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span><span class="o">:</span>
-    <span class="n">replace_non_alpha</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;_&quot;</span><span class="o">:</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="s">&quot;-&quot;</span><span class="o">:</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
-    <span class="n">login_normalized</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span>
-        <span class="n">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">kv</span><span class="o">:</span> <span class="n">a</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="o">*</span><span class="n">kv</span><span class="p">),</span>
-        <span class="n">replace_non_alpha</span><span class="p">.</span><span class="n">iteritems</span><span class="p">(),</span> <span class="n">value</span><span class="p">)</span>
+<div class="codehilite"><pre><span class="k">def</span> <span class="nf">validate_login</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="n">replace_non_alpha</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;_&quot;</span><span class="p">:</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="s">&quot;-&quot;</span><span class="p">:</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+    <span class="n">login_normalized</span> <span class="o">=</span> <span class="nb">reduce</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">kv</span><span class="p">:</span> <span class="n">a</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="o">*</span><span class="n">kv</span><span class="p">),</span>
+        <span class="n">replace_non_alpha</span><span class="o">.</span><span class="n">iteritems</span><span class="p">(),</span> <span class="n">value</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">not</span> <span class="n">login_normalized</span><span class="p">.</span><span class="n">isalnum</span><span class="p">()</span><span class="o">:</span>
-        <span class="n">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s">&quot;Login {} contains wrong characters&quot;</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">login_normalized</span><span class="o">.</span><span class="n">isalnum</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s">&quot;Login {} contains wrong characters&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
 </pre></div>
 
 <div class="comments-block">
@@ -137,13 +140,20 @@
                             <h2>Sidebar</h2>
                         </div>
                         
-
 <ul class="nav nav-pills nav-stacked">
 	
 		
 		<li >
 			<a href="/category/cool-story-bro/">
 				cool-story-bro
+			</a>
+		</li>
+		
+	
+		
+		<li >
+			<a href="/category/linux/">
+				linux
 			</a>
 		</li>
 		
@@ -165,11 +175,9 @@
 		
 	
  </ul>
-
 <hr>
-
-<div class=tags>
-  	<ul>
+<div class="tags">
+  	<ul class="list-unstyled">
 	
 		<li class="tagRank10">
 			<a href="/tag/sqlite/" title="sqlite">sqlite</a>
@@ -185,6 +193,14 @@
 	
 		<li class="tagRank10">
 			<a href="/tag/functional-programming/" title="functional-programming">functional-programming</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/linux/" title="linux">linux</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/server/" title="server">server</a>
 		</li>
 	
 		<li class="tagRank10">
@@ -208,7 +224,7 @@
 		</li>
 	
 		<li class="tagRank9">
-			<a href="/tag/databases/" title="databases">databases</a>
+			<a href="/tag/databases/" title="databases"><b class="current-tag">databases</b></a>
 		</li>
 	
 		<li class="tagRank9">
@@ -224,11 +240,11 @@
 		</li>
 	
 		<li class="tagRank10">
-			<a href="/tag/validation/" title="validation">validation</a>
+			<a href="/tag/validation/" title="validation"><b class="current-tag">validation</b></a>
 		</li>
 	
 		<li class="tagRank10">
-			<a href="/tag/data/" title="data">data</a>
+			<a href="/tag/data/" title="data"><b class="current-tag">data</b></a>
 		</li>
 	
 		<li class="tagRank10">
@@ -237,7 +253,6 @@
 	
 	</ul>
 </div>
-
 
                     </div>                  
                 </div>

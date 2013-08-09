@@ -70,6 +70,9 @@
     <h2>Тюнинг скорости sqlite при работе через SQLAlchemy</h2>
   </div>
 </header>
+
+<p class="text-right"><small>2013-07-30 02:33</small></p>
+
 <p>Некоторые наверняка сталкивались с крайне низкой скоростью инсертов в sqlite с дефолтными настройками, хотя везде пишут, что БД должна работать очень быстро, тем не менее если использовать SQLAlchemy с драйвером pysqlite "из коробки", при большом кол-ве элементов и внушительном объеме данных на каждом инсерте, скорость становится просто невыносимой. Есть возможность тюнить различные параметры через директиву PRAGMA, но типичное применение sqlite (у меня по крайней мере) - это временное хранилище данных, что подразумевает переодическое удаление, после чего при запуске скрипта SQLAlchemy создает новую БД уже без всякого тюнинга. В конце концов я разрбрался и нашел элегантное решение.</p>
 <p>Я использую (последнее время редко) SQLAlchemy с микрофрэймворком Flask (почти всегда, но уже с MongoDB), поэтому приведу пример config.py файла "живого" проекта, в данном случае это парсер данных с твиттера.</p>
 <div class="codehilite"><pre><span class="n">import</span> <span class="n">os</span>
@@ -174,13 +177,20 @@
                             <h2>Sidebar</h2>
                         </div>
                         
-
 <ul class="nav nav-pills nav-stacked">
 	
 		
 		<li >
 			<a href="/category/cool-story-bro/">
 				cool-story-bro
+			</a>
+		</li>
+		
+	
+		
+		<li >
+			<a href="/category/linux/">
+				linux
 			</a>
 		</li>
 		
@@ -202,18 +212,16 @@
 		
 	
  </ul>
-
 <hr>
-
-<div class=tags>
-  	<ul>
+<div class="tags">
+  	<ul class="list-unstyled">
 	
 		<li class="tagRank10">
-			<a href="/tag/sqlite/" title="sqlite">sqlite</a>
+			<a href="/tag/sqlite/" title="sqlite"><b class="current-tag">sqlite</b></a>
 		</li>
 	
 		<li class="tagRank9">
-			<a href="/tag/sqlalchemy/" title="sqlalchemy">sqlalchemy</a>
+			<a href="/tag/sqlalchemy/" title="sqlalchemy"><b class="current-tag">sqlalchemy</b></a>
 		</li>
 	
 		<li class="tagRank10">
@@ -222,6 +230,14 @@
 	
 		<li class="tagRank10">
 			<a href="/tag/functional-programming/" title="functional-programming">functional-programming</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/linux/" title="linux">linux</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/server/" title="server">server</a>
 		</li>
 	
 		<li class="tagRank10">
@@ -245,7 +261,7 @@
 		</li>
 	
 		<li class="tagRank9">
-			<a href="/tag/databases/" title="databases">databases</a>
+			<a href="/tag/databases/" title="databases"><b class="current-tag">databases</b></a>
 		</li>
 	
 		<li class="tagRank9">
@@ -274,7 +290,6 @@
 	
 	</ul>
 </div>
-
 
                     </div>                  
                 </div>

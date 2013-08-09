@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <title>Articles in tag </title>
+    <title>Копирование файлов по ssh (scp)</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description=" content="Ninjaside - modern web technologies">
-    <meta name="keywords" content="web dev, python, javascript">
+    <meta name="description=" content="">
+    <meta name="keywords" content="[&#39;linux&#39;, &#39;tips&#39;, &#39;server&#39;]">
     <meta name="author" content="Alex Istinspring">
-    <meta name="robots" content="noindex">
+    
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.pjax/1.7.0/jquery.pjax.min.js"></script>
@@ -66,23 +66,52 @@
                     <div class="panel panel-default">
                         
 <header>
-<div class="page-header panel-heading">
-  <h2>Articles with tag <b>functional-programming</b></h2>
-</div>
+  <div class="page-header panel-heading">
+    <h2>Копирование файлов по ssh (scp)</h2>
+  </div>
 </header>
 
-<ul>
-    
-    <li>
-        <small>2010-11-17 09:47</small>
-        <a href="/blog/ru/funkcii-map-i-zip-i-lambda-python/">
-            Функции map и zip и lambda. Python
-        </a>
-        <br>
-        <small>Немного про функциональное программирование на Python.</small>
-    </li>
-    
-</ul>
+<p class="text-right"><small>2012-03-10 08:35</small></p>
+
+<p>Что делать, если нужно копировать файлы с сервера на локальный компьютер или с локальной машины на сервер? Или даже с сервера на сервер. Раньше (оч. давно) я поднимал для этих целей фтп сервер ftp, но вот затем, немного поискав в интернете открыл, что существует специальная команда которая позволяет
+перемещать и копировать данные используя ssh соединение, по специальному
+(шифрованному!) протоколу - scp.</p>
+<div class="codehilite"><pre>С помощью программы scp (Secure Copy) вы можете копировать файлы и
+директории между разными Unix или Linux-машинами.
+ Scp использует ssh для соединения и предоставляет аналогичный
+уровень безопасности.
+
+SCP (от англ. secure copy) — протокол RCP копирования файлов,
+использующий в качестве транспорта не RSH, а SSH. В UNIX-подобных
+операционных системах существует одноимённая (scp) утилита
+удалённого копирования файлов (входит в состав openssh).
+</pre></div>
+
+
+<p>Использовать примерно так:</p>
+<div class="codehilite"><pre>scp root@32.1.20.77:/home/database.sqlite ~
+</pre></div>
+
+
+<p>Копирует файл с сервера в рабочую папку текущего юзера на локальном
+компьютере.</p>
+
+<div class="comments-block">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'ninjasideblog'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
 
                     </div>
                 </div>
@@ -106,7 +135,7 @@
 		
 	
 		
-		<li >
+		<li class="active">
 			<a href="/category/linux/">
 				linux
 			</a>
@@ -151,11 +180,11 @@
 		</li>
 	
 		<li class="tagRank10">
-			<a href="/tag/linux/" title="linux">linux</a>
+			<a href="/tag/linux/" title="linux"><b class="current-tag">linux</b></a>
 		</li>
 	
 		<li class="tagRank10">
-			<a href="/tag/server/" title="server">server</a>
+			<a href="/tag/server/" title="server"><b class="current-tag">server</b></a>
 		</li>
 	
 		<li class="tagRank10">
@@ -191,7 +220,7 @@
 		</li>
 	
 		<li class="tagRank9">
-			<a href="/tag/tips/" title="tips">tips</a>
+			<a href="/tag/tips/" title="tips"><b class="current-tag">tips</b></a>
 		</li>
 	
 		<li class="tagRank10">

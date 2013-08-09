@@ -12,8 +12,18 @@ body {
 	overflow-x: hidden;
 }
 
-li.first-article {
+hr {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.first-article {
     font-size: 20px;
+}
+
+
+.current-tag {
+    color: #666;
 }
 
 .tags {
@@ -26,15 +36,16 @@ li.first-article {
 .tags li {
     float: left;
     /* min-width: 100px; */
-    list-style-type: none;
+    /* list-style-type: none; */
     margin: 0;
     padding: 0 0 0 5px;
     letter-spacing: -1px;
 }
 
+
+/*
 .tags li a {
     position: relative;
-    /* top: 0px; */
     left: -10px;
     z-index: 10;
     margin: 0;
@@ -43,15 +54,21 @@ li.first-article {
     font-size: 1em;
     text-decoration: none;
 }
+*/
+
+.tags li:a {
+    text-decoration: none;
+    position: relative;
+    z-index: 0;
+}
 
 .tags li a:hover {
-    text-decoration: underline;
-    position: relative;
     z-index: 50;
     color: #F00;
 }
 
-.tags li.tagRank1 {
+.tags li.tagRank1 a {
+    color: #777;
 }
 
 .tags li.tagRank1 a {
