@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Тюнинг скорости sqlite при работе через SQLAlchemy</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description=" content="как увеличить скорость инсертов (работы) в sqlite через SQLAlchemy">
+    <meta name="keywords" content="[&#39;sqlalchemy&#39;, &#39;sqlite&#39;, &#39;databases&#39;]">
+    <meta name="author" content="Alex Istinspring">
+    
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.pjax/1.7.0/jquery.pjax.min.js"></script>
+    <script type="text/javascript" src="/static/js/meny.min.js"></script>
+    <script type="text/javascript" src="/static/js/application.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/normalize/2.1.0/normalize.css" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/meny.css" />
+    <link rel="stylesheet" type="text/css" href="/pygments.css">
+    
+    <link rel="stylesheet" type="text/css" href="/static/css/layout.css" />
+    
+</head>
+
+<body>
+    <div class="meny">
+        
+        <ul>
+            <li><a href="http://github.com/istinspring">GitHub</a></li>
+            <li><a href="http://twitter.com/istinspring">Twitter</a></li>
+        </ul>
+    </div>
+
+    
+    <div class="container" id="main-container">
+        <nav>
+            
+<div class="navbar navbar-static-top">
+	<a class="navbar-brand" href="/"><b>Ninjaside</b></a>
+  	<ul class="nav navbar-nav">
+    
+    	<li>
+    		<a href="/page/experience/">
+    			Experience
+    		</a>
+    	</li>
+    
+    	<li>
+    		<a href="/page/about/">
+    			About
+    		</a>
+    	</li>
+    
+	</ul>
+	<ul class="nav navbar-nav pull-right">
+		<li><a href="/wiki/"><b>Wiki</b></a></li>
+	</ul>
+</div>
+
+        </nav>
+
+        <div class="row">
+            <article>
+                <div class="col col-lg-8">
+                    <div class="panel panel-default">
+                        
+<header>
+  <div class="page-header panel-heading">
+    <h2>Тюнинг скорости sqlite при работе через SQLAlchemy</h2>
+  </div>
+</header>
+<p>Некоторые наверняка сталкивались с крайне низкой скоростью инсертов в sqlite с дефолтными настройками, хотя везде пишут, что БД должна работать очень быстро, тем не менее если использовать SQLAlchemy с драйвером pysqlite "из коробки", при большом кол-ве элементов и внушительном объеме данных на каждом инсерте, скорость становится просто невыносимой. Есть возможность тюнить различные параметры через директиву PRAGMA, но типичное применение sqlite (у меня по крайней мере) - это временное хранилище данных, что подразумевает переодическое удаление, после чего при запуске скрипта SQLAlchemy создает новую БД уже без всякого тюнинга. В конце концов я разрбрался и нашел элегантное решение.</p>
+<p>Я использую (последнее время редко) SQLAlchemy с микрофрэймворком Flask (почти всегда, но уже с MongoDB), поэтому приведу пример config.py файла "живого" проекта, в данном случае это парсер данных с твиттера.</p>
+<div class="codehilite"><pre><span class="n">import</span> <span class="n">os</span>
+<span class="n">import</span> <span class="n">sys</span>
+<span class="n">import</span> <span class="n">logging</span>
+<span class="n">from</span> <span class="n">sqlalchemy</span><span class="p">.</span><span class="n">orm</span> <span class="n">import</span> <span class="n">sessionmaker</span>
+<span class="n">from</span> <span class="n">sqlalchemy</span> <span class="n">import</span> <span class="n">create_engine</span>
+
+<span class="n">from</span> <span class="n">models</span> <span class="n">import</span> <span class="n">Base</span>
+
+<span class="cp"># add project setting.py file folder to path</span>
+<span class="n">PROJECT_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))</span>
+<span class="k">if</span> <span class="n">not</span> <span class="n">PROJECT_PATH</span> <span class="n">in</span> <span class="n">sys</span><span class="p">.</span><span class="n">path</span><span class="o">:</span>
+    <span class="n">sys</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">PROJECT_PATH</span><span class="p">)</span>
+
+
+<span class="n">DEBUG</span> <span class="o">=</span> <span class="n">False</span>
+<span class="n">LOG_LEVEL</span> <span class="o">=</span> <span class="n">logging</span><span class="p">.</span><span class="n">INFO</span>
+
+
+<span class="cp"># To get this go to https:</span><span class="c1">//dev.twitter.com/apps</span>
+<span class="cp"># full consumer key and secret by</span>
+<span class="cp"># Consumer key  and Consumer secret values</span>
+<span class="cp"># then go to OAuth Tool tab and get</span>
+<span class="cp"># Consumer key and Consumer secret</span>
+<span class="cp"># or using &quot;Your access token&quot;&quot;</span>
+<span class="n">API_CONSUMER_KEY</span> <span class="o">=</span> <span class="err">&#39;&#39;</span>
+<span class="n">API_CONSUMER_SECRET</span> <span class="o">=</span> <span class="err">&#39;&#39;</span>
+<span class="n">ACCESS_TOKEN</span> <span class="o">=</span> <span class="err">&#39;&#39;</span>
+<span class="n">ACCESS_SECRET</span> <span class="o">=</span> <span class="err">&#39;&#39;</span>
+
+
+<span class="n">def</span> <span class="n">_engine</span><span class="p">()</span><span class="o">:</span>
+    <span class="n">sqlite_path</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">PROJECT_PATH</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">db</span><span class="o">/</span><span class="n">twitter</span><span class="p">.</span><span class="n">sqlite</span><span class="err">&#39;</span><span class="p">)</span>
+    <span class="n">connection_string</span> <span class="o">=</span> <span class="err">&#39;</span><span class="n">sqlite</span><span class="o">+</span><span class="n">pysqlite</span><span class="o">:</span><span class="c1">///%s&#39; % sqlite_path</span>
+    <span class="k">return</span> <span class="n">create_engine</span><span class="p">(</span><span class="n">connection_string</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="err">&#39;</span><span class="n">utf</span><span class="o">-</span><span class="mi">8</span><span class="err">&#39;</span><span class="p">)</span>
+
+
+<span class="n">def</span> <span class="n">init_engine</span><span class="p">()</span><span class="o">:</span>
+    <span class="n">db_engine</span> <span class="o">=</span> <span class="n">_engine</span><span class="p">()</span>
+    <span class="n">Base</span><span class="p">.</span><span class="n">metadata</span><span class="p">.</span><span class="n">create_all</span><span class="p">(</span><span class="n">db_engine</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">db_engine</span>
+
+
+<span class="n">def</span> <span class="n">reset_db</span><span class="p">()</span><span class="o">:</span>
+    <span class="n">db_engine</span> <span class="o">=</span> <span class="n">_engine</span><span class="p">()</span>
+    <span class="n">Base</span><span class="p">.</span><span class="n">metadata</span><span class="p">.</span><span class="n">drop_all</span><span class="p">(</span><span class="n">db_engine</span><span class="p">)</span>
+
+
+<span class="n">from</span> <span class="n">sqlalchemy</span><span class="p">.</span><span class="n">engine</span> <span class="n">import</span> <span class="n">Engine</span>
+<span class="n">from</span> <span class="n">sqlalchemy</span> <span class="n">import</span> <span class="n">event</span>
+
+<span class="cp"># далее происходит привязка функции к событию (коннект к БД)</span>
+<span class="cp"># с использование декоратора @event</span>
+<span class="cp"># и затем для БД устанавливаются нужные настройки</span>
+<span class="err">@</span><span class="n">event</span><span class="p">.</span><span class="n">listens_for</span><span class="p">(</span><span class="n">Engine</span><span class="p">,</span> <span class="s">&quot;connect&quot;</span><span class="p">)</span>
+<span class="n">def</span> <span class="n">set_sqlite_pragma</span><span class="p">(</span><span class="n">dbapi_connection</span><span class="p">,</span> <span class="n">connection_record</span><span class="p">)</span><span class="o">:</span>
+    <span class="n">cursor</span> <span class="o">=</span> <span class="n">dbapi_connection</span><span class="p">.</span><span class="n">cursor</span><span class="p">()</span>
+    <span class="n">cursor</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;PRAGMA foreign_keys = ON&quot;</span><span class="p">)</span>
+    <span class="n">cursor</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;PRAGMA synchronous = OFF&quot;</span><span class="p">)</span>
+    <span class="n">cursor</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;PRAGMA journal_mode = MEMORY&quot;</span><span class="p">)</span>
+    <span class="n">cursor</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+
+
+<span class="cp"># create database connection and session</span>
+<span class="n">db_engine</span> <span class="o">=</span> <span class="n">init_engine</span><span class="p">()</span>
+<span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">db_engine</span><span class="p">)</span>
+</pre></div>
+
+
+<p>В данном случае включается поддержка foreign_keys, отключается проверка записи данных (synchronous) т.е. драйвер slqite передает задачу операционной системе и не проверяет правильность записи, тем самым экономя кучу времени, но в случае сбоя питания база скорее всего будет повреждена, а данные потеряны (подробнее по ссылке http://www.sqlite.org/pragma.html#pragma_synchronous ) и journal_mode - журнал переносится в память.
+<strong>Т.е. фактически мы жертвуем целостностью данных (что нужно не всегда) и получаем выйграш в скорости.</strong></p>
+<p>Само собой существует множество вариантов более тонкой настройки, можно поиграться с такими параметрами как locking_mode, cache_size, page_size и т.д.</p>
+<p>Полный список директив PRAGMA можно найти в документации <a href="http://www.sqlite.org/pragma.html">http://www.sqlite.org/pragma.html</a> так же есть серия статей на хабре <a href="http://habrahabr.ru/post/149356/">http://habrahabr.ru/post/149356/</a></p>
+<p>На данный момент крайне редко использую sqlite, а если вдруг понадобится какое-то решение <a href="embedded%20database">http://en.wikipedia.org/wiki/Embedded_database</a> то скорее всего буду смотреть в сторону <a href="http://labs.codernity.com/codernitydb/">http://labs.codernity.com/codernitydb/</a></p>
+
+<div class="comments-block">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'ninjasideblog'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+                    </div>
+                </div>
+            </article>
+            
+            <aside>
+                <div class="col col-lg-4">
+                    <div class="panel panel-default">
+                        <div class="page-header panel-heading">
+                            <h2>Sidebar</h2>
+                        </div>
+                        
+
+<ul class="nav nav-pills nav-stacked">
+	
+		
+		<li >
+			<a href="/category/cool-story-bro/">
+				cool-story-bro
+			</a>
+		</li>
+		
+	
+		
+		<li class="active">
+			<a href="/category/python/">
+				python
+			</a>
+		</li>
+		
+	
+		
+		<li >
+			<a href="/category/tech/">
+				tech
+			</a>
+		</li>
+		
+	
+ </ul>
+
+<hr>
+
+<div class=tags>
+  	<ul>
+	
+		<li class="tagRank10">
+			<a href="/tag/sqlite/" title="sqlite">sqlite</a>
+		</li>
+	
+		<li class="tagRank9">
+			<a href="/tag/sqlalchemy/" title="sqlalchemy">sqlalchemy</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/mongodb/" title="mongodb">mongodb</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/functional-programming/" title="functional-programming">functional-programming</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/blog/" title="blog">blog</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/ddos/" title="ddos">ddos</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/orm/" title="orm">orm</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/algorithms/" title="algorithms">algorithms</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/yandex/" title="yandex">yandex</a>
+		</li>
+	
+		<li class="tagRank9">
+			<a href="/tag/databases/" title="databases">databases</a>
+		</li>
+	
+		<li class="tagRank9">
+			<a href="/tag/code-fu/" title="code-fu">code-fu</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/tech/" title="tech">tech</a>
+		</li>
+	
+		<li class="tagRank9">
+			<a href="/tag/tips/" title="tips">tips</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/validation/" title="validation">validation</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/data/" title="data">data</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/snippets/" title="snippets">snippets</a>
+		</li>
+	
+	</ul>
+</div>
+
+
+                    </div>                  
+                </div>
+            </aside>
+        </div>
+
+        <footer>
+            <div class="panel">
+                
+<div class="panel-footer">
+	<p>&copy; Copyright 2013 Alex Istinspring</p>
+	<p><small><a class="no-pjax" href="/sitemap.xml">sitemap.xml</a></small></p>
+</div>
+
+            </div>
+        </footer>
+    </div>
+    
+
+    <script type="text/javascript">
+        $(document).pjax('a:not(.no-pjax)', '#main-container'); // Enable pjax for links
+        
+        // activate meny sidebar
+        var meny = Meny.create({
+            menuElement: document.querySelector('.meny'),
+            contentsElement: document.querySelector('.container'),
+            position: 'left',
+            height: 200, // The height of the menu (when using top/bottom position)
+            width: 200, // The width of the menu (when using left/right position)
+            mouse: true, // Use mouse movement to automatically open/close
+            touch: true // Use touch swipe events to open/close
+        });
+    </script>
+
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-10309863-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+</body>
+</html>

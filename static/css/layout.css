@@ -1,0 +1,103 @@
+body {
+	/* font-family: Tahoma, sans-serif; */
+
+	background-color: #222;
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAGklEQVQIW2NkYGD4D8SMQAwGcAY2AbBKDBUAVuYCBQPd34sAAAAASUVORK5CYII=);
+	background-repeat: repeat;
+
+	font-family: 'Lato', Helvetica, sans-serif;
+	font-size: 16px;
+	color: #222;
+
+	overflow-x: hidden;
+}
+
+li.first-article {
+    font-size: 20px;
+}
+
+.tags {
+    overflow: hidden;
+    margin: 10px auto 20px;
+    padding: 1px;
+    line-height: 1.6em;
+}
+
+.tags li {
+    float: left;
+    /* min-width: 100px; */
+    list-style-type: none;
+    margin: 0;
+    padding: 0 0 0 5px;
+    letter-spacing: -1px;
+}
+
+.tags li a {
+    position: relative;
+    /* top: 0px; */
+    left: -10px;
+    z-index: 10;
+    margin: 0;
+    padding: 0 2px;
+    color: #000;
+    font-size: 1em;
+    text-decoration: none;
+}
+
+.tags li a:hover {
+    text-decoration: underline;
+    position: relative;
+    z-index: 50;
+    color: #F00;
+}
+
+.tags li.tagRank1 {
+}
+
+.tags li.tagRank1 a {
+    font-size: 2.6em;
+}
+
+.tags li.tagRank2 a {
+    font-size: 2.4em;
+    color: #222;
+}
+.tags li.tagRank3 a {
+    font-size: 2.2em;
+    color: #333;
+}
+
+.tags li.tagRank4 a {
+    font-size: 2.0em;
+    color: #444;
+}
+
+.tags li.tagRank5 a {
+    font-size: 1.8em;
+    color: #555;
+}
+
+.tags li.tagRank6 a {
+    font-size: 1.6em;
+    color: #666;
+}
+
+.tags li.tagRank7 a {
+    font-size: 1.4em;
+    color: #777;
+}
+
+.tags li.tagRank8 a {
+    font-size: 1.2em;
+    color: #888;
+}
+
+.tags li.tagRank9 a {
+    font-size: 1.0em;
+    color: #999;
+}
+
+.tags li.tagRank10 a {
+    font-size: 0.8em;
+    color: #AAA;
+}

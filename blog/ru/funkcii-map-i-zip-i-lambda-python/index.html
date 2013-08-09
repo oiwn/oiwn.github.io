@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Функции map и zip и lambda. Python</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description=" content="Немного про функциональное программирование на Python.">
+    <meta name="keywords" content="[&#39;functional-programming&#39;, &#39;tips&#39;, &#39;code-fu&#39;]">
+    <meta name="author" content="Alex Istinspring">
+    
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.pjax/1.7.0/jquery.pjax.min.js"></script>
+    <script type="text/javascript" src="/static/js/meny.min.js"></script>
+    <script type="text/javascript" src="/static/js/application.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/normalize/2.1.0/normalize.css" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/meny.css" />
+    <link rel="stylesheet" type="text/css" href="/pygments.css">
+    
+    <link rel="stylesheet" type="text/css" href="/static/css/layout.css" />
+    
+</head>
+
+<body>
+    <div class="meny">
+        
+        <ul>
+            <li><a href="http://github.com/istinspring">GitHub</a></li>
+            <li><a href="http://twitter.com/istinspring">Twitter</a></li>
+        </ul>
+    </div>
+
+    
+    <div class="container" id="main-container">
+        <nav>
+            
+<div class="navbar navbar-static-top">
+	<a class="navbar-brand" href="/"><b>Ninjaside</b></a>
+  	<ul class="nav navbar-nav">
+    
+    	<li>
+    		<a href="/page/experience/">
+    			Experience
+    		</a>
+    	</li>
+    
+    	<li>
+    		<a href="/page/about/">
+    			About
+    		</a>
+    	</li>
+    
+	</ul>
+	<ul class="nav navbar-nav pull-right">
+		<li><a href="/wiki/"><b>Wiki</b></a></li>
+	</ul>
+</div>
+
+        </nav>
+
+        <div class="row">
+            <article>
+                <div class="col col-lg-8">
+                    <div class="panel panel-default">
+                        
+<header>
+  <div class="page-header panel-heading">
+    <h2>Функции map и zip и lambda. Python</h2>
+  </div>
+</header>
+<p>Функции map, zip и лямбда (кстати говоря называются "функции высшего порядка" или "first-class-functions") позволяют достаточно просто выполнять различные манипуляции с данными, для чего в "обычном" процедурном стиле приходится писать немного больше кода. Все ниженаписанное относится к так называемому <a href="http://ru.wikipedia.org/wiki/Функциональное_программирование_на_Питоне">функциональному
+программированию</a>, луркайте подробности.</p>
+<h2>Функции map, zip и lambda в примерах.</h2>
+<p>Простая задача есть список a = [1, 2] и список b = [3, 4] одинаковой
+длины и нужно слить их парами. Проще простого - используя функцию
+<strong>zip</strong> :</p>
+<div class="codehilite"><pre><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+<span class="n">print</span> <span class="n">zip</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+<span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)]</span>
+</pre></div>
+
+
+<p>или тройками :</p>
+<div class="codehilite"><pre><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+<span class="n">c</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+<span class="n">print</span> <span class="n">zip</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">)</span>
+<span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">)]</span>
+</pre></div>
+
+
+<p>или в более общем виде</p>
+<div class="codehilite"><pre><span class="n">list</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span>
+<span class="n">print</span> <span class="n">zip</span><span class="p">(</span><span class="o">*</span><span class="n">list</span><span class="p">)</span>
+<span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">)]</span>
+</pre></div>
+
+
+<p>Звездочка * перед list как-бы говорит что передается список аргументов,
+т.е. Действовать эквивалентно тому как если бы передали a, b, c т.е.
+Можно даже так <strong>print zip(*[a, b, c])</strong> результат не изменится.</p>
+<p>Далее, функция – <strong>map</strong>. Случаются ситуации, когда внезапно нужно
+применить какую-либо функцию к каждому элементу списка. Нуб напишет так 
+:</p>
+<div class="codehilite"><pre><span class="n">def</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">:</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span>
+
+<span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">num</span> <span class="n">in</span> <span class="n">nums</span><span class="o">:</span>
+    <span class="n">print</span> <span class="n">f</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Более опытный нуб изучивший list comprehensions :</p>
+<div class="codehilite"><pre><span class="n">def</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">:</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span>
+<span class="n">print</span> <span class="p">[</span><span class="n">f</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="k">for</span> <span class="n">num</span> <span class="n">in</span> <span class="n">nums</span><span class="p">]</span>
+</pre></div>
+
+
+<p>Программист сделает проще :</p>
+<div class="codehilite"><pre><span class="n">def</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">:</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span>
+<span class="n">print</span> <span class="n">map</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">nums</span><span class="p">)</span>
+</pre></div>
+
+
+<p>А тру-мэдскиллз хакер сделает следующим образом (при условии конечно, что функцию можно записать лямбдой, далеко не всегда функция будет достаточно простой чтобы записать ее лямбдой) :</p>
+<div class="codehilite"><pre><span class="n">print</span> <span class="n">map</span><span class="p">(</span><span class="n">lambda</span> <span class="n">x</span><span class="o">:</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="n">nums</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Последняя запись являет собой пример наиболее грамотного подхода. Дело в
+том, что когда человек пишет код как стихи, в порыве вдохновения (что другими словами можно назвать "в диком угаре"), крайне роляет скорость написания (отсюда растут корни трепетной любви многих девелоперов к простым текстовым редакторм vim, emacs, sublimetext), а сильная сторона питона как раз в размере генерируемого кода - он очень компактный. Написать одну строчку естественно быстрее чем 7, да и читать короткий код проще, однако написание подобного кода требует определенного навыка. Другая сторона
+медали – иногда в этом "диком угаре" пишут в одну строчку целые последовательности достаточно сложных действий, да так что очень трудно понять что там происходит и что получается в конечном итоге.</p>
+<p>Из примера понятно, что <strong>map</strong> применяет какую-либо функцию к списку и
+возвращает результат опять же в виде списка. Вы можете передать
+несколько списков, тогда функция (идущая первым параметром) должна
+принимать несколько аргументов (по количеству списков переданных в
+<strong>map</strong>) .</p>
+<div class="codehilite"><pre><span class="n">def</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span><span class="o">:</span>    
+    <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="n">y</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+<span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+<span class="n">print</span> <span class="n">map</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">20</span><span class="p">]</span>
+</pre></div>
+
+
+<p>Классно, правда?</p>
+<p>Однако если списки разной длины, т.е. Один короче другого, то он будет
+дополнен значениями None до нужной длины. Если убрать из списка <strong>b</strong>
+последнее значение – пример не будет работать, т.к. В функции f
+произойдет попытка умножения числа на None, и питоне не позволяет это делать, 
+что кстати выгодно отличает его от php, который в подобной
+ситуации работал бы дальше. Поэтому если функция f достаточно объемна,
+неплохо бы проверять передаваемые значения. Например ;</p>
+<div class="codehilite"><pre><span class="n">def</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span><span class="o">:</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="n">None</span><span class="p">)</span><span class="o">:</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="mi">1</span>    
+    <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="n">y</span>
+</pre></div>
+
+
+<p>Если же заместо функции стоит None – то <strong>map</strong> действует примерно так
+же как и <strong>zip</strong>, но если передаваемые списки разной длины в результат
+будет писаться None – что кстати очень уместно в некоторых моментах.</p>
+<div class="codehilite"><pre><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+<span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+<span class="n">print</span> <span class="n">map</span><span class="p">(</span><span class="n">None</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">None</span><span class="p">)]</span>
+</pre></div>
+
+
+<p>Теперь про <strong>лямбда функции в python</strong>. Они используются когда вам
+необходимо определить функцию без исподьзования def func_name(): ..., 
+ведь часто (как в предыдущих примерах) функция настолько мала, что определять её отдельно смыла нет (лишние строчки кода, что ухудшение читабельность). Поэтому функцию можно определить “на месте” <strong>f = lambda x: x*x</strong> как бы говорит нам –
+принимает x, возвращает x*x</p>
+<p>Так используя стандартные инструменты питона можно записать довольно
+сложные действия в одну строчку. К примеру функцию :</p>
+<div class="codehilite"><pre><span class="n">def</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span><span class="o">:</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="n">None</span><span class="p">)</span><span class="o">:</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="mi">1</span>    
+    <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="n">y</span>
+</pre></div>
+
+
+<p>можно представить как :</p>
+<div class="codehilite"><pre><span class="n">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">:</span> <span class="n">x</span> <span class="o">*</span> <span class="p">(</span><span class="n">y</span> <span class="k">if</span> <span class="n">y</span> <span class="n">is</span> <span class="n">not</span> <span class="n">None</span> <span class="k">else</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+
+<p>А теперь хорошо бы передавать списки отсортированные по длине – len(a)
+> (b) – проще простого - воспользуемся функцией <strong>sorted</strong> :</p>
+<div class="codehilite"><pre><span class="n">sorted</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="n">key</span><span class="o">=</span><span class="n">lambda</span> <span class="n">x</span><span class="o">:</span> <span class="n">len</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">reverse</span><span class="o">=</span><span class="n">True</span><span class="p">)</span>
+</pre></div>
+
+
+<p><strong>фунция sorted</strong> принимает список значений ([a,b] = [[1,2],[2,4,5]]) и
+сортирует по ключу key – который у нас задан функцией len(x)
+-возвращающей длину списка, сортируем в порядке убывания (reverse=True)</p>
+<p>В конечном итоге вся операция записывается таким образом :</p>
+<div class="codehilite"><pre><span class="n">map</span><span class="p">(</span><span class="n">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">:</span> <span class="n">x</span> <span class="o">*</span> <span class="p">(</span><span class="n">y</span> <span class="k">if</span> <span class="n">y</span> <span class="n">is</span> <span class="n">not</span> <span class="n">None</span> <span class="k">else</span> <span class="mi">1</span><span class="p">),</span> <span class="o">*</span><span class="n">sorted</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="n">key</span><span class="o">=</span><span class="n">lambda</span> <span class="n">x</span><span class="o">:</span> <span class="n">len</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">reverse</span><span class="o">=</span><span class="n">True</span><span class="p">))</span>
+</pre></div>
+
+
+<p>списки a и b могут быть разной длины и передаваться в каком угодно
+порядке. <strong>Лямбда-выражения удобны для определения не очень сложных
+функций, которые передаются затем другим функциям.</strong></p>
+
+<div class="comments-block">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'ninjasideblog'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+                    </div>
+                </div>
+            </article>
+            
+            <aside>
+                <div class="col col-lg-4">
+                    <div class="panel panel-default">
+                        <div class="page-header panel-heading">
+                            <h2>Sidebar</h2>
+                        </div>
+                        
+
+<ul class="nav nav-pills nav-stacked">
+	
+		
+		<li >
+			<a href="/category/cool-story-bro/">
+				cool-story-bro
+			</a>
+		</li>
+		
+	
+		
+		<li class="active">
+			<a href="/category/python/">
+				python
+			</a>
+		</li>
+		
+	
+		
+		<li >
+			<a href="/category/tech/">
+				tech
+			</a>
+		</li>
+		
+	
+ </ul>
+
+<hr>
+
+<div class=tags>
+  	<ul>
+	
+		<li class="tagRank10">
+			<a href="/tag/sqlite/" title="sqlite">sqlite</a>
+		</li>
+	
+		<li class="tagRank9">
+			<a href="/tag/sqlalchemy/" title="sqlalchemy">sqlalchemy</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/mongodb/" title="mongodb">mongodb</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/functional-programming/" title="functional-programming">functional-programming</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/blog/" title="blog">blog</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/ddos/" title="ddos">ddos</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/orm/" title="orm">orm</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/algorithms/" title="algorithms">algorithms</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/yandex/" title="yandex">yandex</a>
+		</li>
+	
+		<li class="tagRank9">
+			<a href="/tag/databases/" title="databases">databases</a>
+		</li>
+	
+		<li class="tagRank9">
+			<a href="/tag/code-fu/" title="code-fu">code-fu</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/tech/" title="tech">tech</a>
+		</li>
+	
+		<li class="tagRank9">
+			<a href="/tag/tips/" title="tips">tips</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/validation/" title="validation">validation</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/data/" title="data">data</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/snippets/" title="snippets">snippets</a>
+		</li>
+	
+	</ul>
+</div>
+
+
+                    </div>                  
+                </div>
+            </aside>
+        </div>
+
+        <footer>
+            <div class="panel">
+                
+<div class="panel-footer">
+	<p>&copy; Copyright 2013 Alex Istinspring</p>
+	<p><small><a class="no-pjax" href="/sitemap.xml">sitemap.xml</a></small></p>
+</div>
+
+            </div>
+        </footer>
+    </div>
+    
+
+    <script type="text/javascript">
+        $(document).pjax('a:not(.no-pjax)', '#main-container'); // Enable pjax for links
+        
+        // activate meny sidebar
+        var meny = Meny.create({
+            menuElement: document.querySelector('.meny'),
+            contentsElement: document.querySelector('.container'),
+            position: 'left',
+            height: 200, // The height of the menu (when using top/bottom position)
+            width: 200, // The width of the menu (when using left/right position)
+            mouse: true, // Use mouse movement to automatically open/close
+            touch: true // Use touch swipe events to open/close
+        });
+    </script>
+
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-10309863-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+</body>
+</html>

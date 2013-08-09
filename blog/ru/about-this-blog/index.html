@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Несколько слов про этот блог</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description=" content="на чем написан этот блог и какие технологии использовались">
+    <meta name="keywords" content="[&#39;blog&#39;, &#39;tech&#39;]">
+    <meta name="author" content="Alex Istinspring">
+    
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.pjax/1.7.0/jquery.pjax.min.js"></script>
+    <script type="text/javascript" src="/static/js/meny.min.js"></script>
+    <script type="text/javascript" src="/static/js/application.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/normalize/2.1.0/normalize.css" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/meny.css" />
+    <link rel="stylesheet" type="text/css" href="/pygments.css">
+    
+    <link rel="stylesheet" type="text/css" href="/static/css/layout.css" />
+    
+</head>
+
+<body>
+    <div class="meny">
+        
+        <ul>
+            <li><a href="http://github.com/istinspring">GitHub</a></li>
+            <li><a href="http://twitter.com/istinspring">Twitter</a></li>
+        </ul>
+    </div>
+
+    
+    <div class="container" id="main-container">
+        <nav>
+            
+<div class="navbar navbar-static-top">
+	<a class="navbar-brand" href="/"><b>Ninjaside</b></a>
+  	<ul class="nav navbar-nav">
+    
+    	<li>
+    		<a href="/page/experience/">
+    			Experience
+    		</a>
+    	</li>
+    
+    	<li>
+    		<a href="/page/about/">
+    			About
+    		</a>
+    	</li>
+    
+	</ul>
+	<ul class="nav navbar-nav pull-right">
+		<li><a href="/wiki/"><b>Wiki</b></a></li>
+	</ul>
+</div>
+
+        </nav>
+
+        <div class="row">
+            <article>
+                <div class="col col-lg-8">
+                    <div class="panel panel-default">
+                        
+<header>
+  <div class="page-header panel-heading">
+    <h2>Несколько слов про этот блог</h2>
+  </div>
+</header>
+<p>Hi massive!  </p>
+<p>Решил дропнуть свой старый блог, т.к. не хочется использовать тяжелый Wordpress который требует php и базу данных. Уже довольно давно в среде веб-девелоперов стало модным делать блоги на так называемых static generator, это скрипт который рендерит контент (который хранится в определенном формате: rst, markdown и так далее) в статический сайт, другими словами в html файлы. Для блога, как правило, не нужно какое-то взаимодействие с бэкендом, а там где нужно - многие вещи можно использовать в виде сторонних сервисов, я имею в виду комментарии или отзывы.  </p>
+<p>В плюсах  </p>
+<ul>
+<li><strong>скорость загрузки страниц для пользователя</strong></li>
+<li>крайне низкая нагрузка на сервер даже при большом трафике</li>
+<li>возможность использовать такие сервисы как github/heroku (и многие другие) для размещения блога, как правило базовый план (который бесплатный) позволяет это сделать и что самое главное эти сервисы позаботятся о хранении, бэкапах и обслуживании софта/железа за вас</li>
+<li>такие сайты/блоги нельзя "хакнуть".</li>
+</ul>
+<p>Так вот, когда наступает время и девелопер решает начать писать в блог, практически всегда начинает писаться <a href="свой%20static%20blog%20generator">https://github.com/istinspring/my-blog</a> (на гитхабе их лежат сотни, но есть несколько довольно широко используемых: Octopress/Jekyl/Hyde/Pelican). Я решил тоже написать движек сам, но пошел простым путем. Для блога используется фрэймвок <a href="http://flask.pocoo.org/">Flask</a> и расширения к нему flask-flatpages и flask-frozen. Первый позволяет огранизовать рендеринг .md (MarkDown) файлов в html, а второй сбрасывает весь сайт в набор html/css/js файлов. Некоторое кол-ва кода все же пришлось написать, для создания нужной структуры страниц, собственно сам html/js этих страниц (используя Bootstrap 3), построение сайтмапа, а так же реализацию тэгов и категорий. Flask к тому же удобно работает как локальный вебсервер при написании статей и правке html/js кода.</p>
+<p>Статьи пишу в формате MarkDown используя обычный текстовой редактор (сейчас это SublimeText 2), этот формат широко используется на гитхабе для создания wiki страниц проектов и README файлов. Оказалось, что после некоторой практики писать посты в формате MarkDown гораздо удобнее чем в JS веб-редакторах (редактор в админке Wordpress, TinyMCE и другие), ознакомится со структурой .md файлов можно за 15 минут и затем пойдет уже чистый профит.</p>
+<p>Еще одна <em>фишка</em> блога - <strong>динамическая подгрузка контента без релоада страницы целиком</strong>. Это тоже весьма увеличивает скорость (и следовательно улучшает <em>"user experience"</em>), т.к. статика (css/js) файлы не перезагружаются каждый раз когда пользователь переходит на другую страницу блога. Сдалано это с помощью библиотеки <a href="https://github.com/defunkt/jquery-pjax">pjax</a> и работает с <a href="http://caniuse.com/#search=pushstate">браузерами поддерживающими pushState</a> (т.е. Chrome26/Firefox21/IE10, короче говоря современными браузерами). </p>
+<p>Часть статик файлов (jquery, pjax, normalize) тянется с <strong>CDN</strong> и это так же уменьшает время загрузки страницы. Вообщем в какой-то момент можно даже забыть о том, что работаешь с сайтом через интернет.</p>
+<p>В качестве фронт-энд фрэймворка для html/css используется <a href="http://getbootstrap.com/"><strong>Twitter Bootstrap 3</strong></a>, который пока еще находится в статии разработки (upd. уже вышел).</p>
+<p>Есть желание добавить больше различныех эффектов на CSS3/JS, собственно кое-что (2ой сайдбар при наведении мылки влево до упора) уже работает.</p>
+<p>Потихоньку в течении нескольких недель перетащу актуальные статьи со старого блога и постараюсь почаще писать новые.</p>
+
+<div class="comments-block">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'ninjasideblog'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+                    </div>
+                </div>
+            </article>
+            
+            <aside>
+                <div class="col col-lg-4">
+                    <div class="panel panel-default">
+                        <div class="page-header panel-heading">
+                            <h2>Sidebar</h2>
+                        </div>
+                        
+
+<ul class="nav nav-pills nav-stacked">
+	
+		
+		<li >
+			<a href="/category/cool-story-bro/">
+				cool-story-bro
+			</a>
+		</li>
+		
+	
+		
+		<li >
+			<a href="/category/python/">
+				python
+			</a>
+		</li>
+		
+	
+		
+		<li class="active">
+			<a href="/category/tech/">
+				tech
+			</a>
+		</li>
+		
+	
+ </ul>
+
+<hr>
+
+<div class=tags>
+  	<ul>
+	
+		<li class="tagRank10">
+			<a href="/tag/sqlite/" title="sqlite">sqlite</a>
+		</li>
+	
+		<li class="tagRank9">
+			<a href="/tag/sqlalchemy/" title="sqlalchemy">sqlalchemy</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/mongodb/" title="mongodb">mongodb</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/functional-programming/" title="functional-programming">functional-programming</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/blog/" title="blog">blog</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/ddos/" title="ddos">ddos</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/orm/" title="orm">orm</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/algorithms/" title="algorithms">algorithms</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/yandex/" title="yandex">yandex</a>
+		</li>
+	
+		<li class="tagRank9">
+			<a href="/tag/databases/" title="databases">databases</a>
+		</li>
+	
+		<li class="tagRank9">
+			<a href="/tag/code-fu/" title="code-fu">code-fu</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/tech/" title="tech">tech</a>
+		</li>
+	
+		<li class="tagRank9">
+			<a href="/tag/tips/" title="tips">tips</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/validation/" title="validation">validation</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/data/" title="data">data</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/snippets/" title="snippets">snippets</a>
+		</li>
+	
+	</ul>
+</div>
+
+
+                    </div>                  
+                </div>
+            </aside>
+        </div>
+
+        <footer>
+            <div class="panel">
+                
+<div class="panel-footer">
+	<p>&copy; Copyright 2013 Alex Istinspring</p>
+	<p><small><a class="no-pjax" href="/sitemap.xml">sitemap.xml</a></small></p>
+</div>
+
+            </div>
+        </footer>
+    </div>
+    
+
+    <script type="text/javascript">
+        $(document).pjax('a:not(.no-pjax)', '#main-container'); // Enable pjax for links
+        
+        // activate meny sidebar
+        var meny = Meny.create({
+            menuElement: document.querySelector('.meny'),
+            contentsElement: document.querySelector('.container'),
+            position: 'left',
+            height: 200, // The height of the menu (when using top/bottom position)
+            width: 200, // The width of the menu (when using left/right position)
+            mouse: true, // Use mouse movement to automatically open/close
+            touch: true // Use touch swipe events to open/close
+        });
+    </script>
+
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-10309863-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+</body>
+</html>

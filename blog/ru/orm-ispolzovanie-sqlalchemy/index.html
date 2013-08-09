@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>ORM. Использование SQLAlchemy.</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description=" content="Использование SQLAlchemy для работы с реляционными базами данных.">
+    <meta name="keywords" content="[&#39;code-fu&#39;, &#39;orm&#39;]">
+    <meta name="author" content="Alex Istinspring">
+    
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.pjax/1.7.0/jquery.pjax.min.js"></script>
+    <script type="text/javascript" src="/static/js/meny.min.js"></script>
+    <script type="text/javascript" src="/static/js/application.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/normalize/2.1.0/normalize.css" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/meny.css" />
+    <link rel="stylesheet" type="text/css" href="/pygments.css">
+    
+    <link rel="stylesheet" type="text/css" href="/static/css/layout.css" />
+    
+</head>
+
+<body>
+    <div class="meny">
+        
+        <ul>
+            <li><a href="http://github.com/istinspring">GitHub</a></li>
+            <li><a href="http://twitter.com/istinspring">Twitter</a></li>
+        </ul>
+    </div>
+
+    
+    <div class="container" id="main-container">
+        <nav>
+            
+<div class="navbar navbar-static-top">
+	<a class="navbar-brand" href="/"><b>Ninjaside</b></a>
+  	<ul class="nav navbar-nav">
+    
+    	<li>
+    		<a href="/page/experience/">
+    			Experience
+    		</a>
+    	</li>
+    
+    	<li>
+    		<a href="/page/about/">
+    			About
+    		</a>
+    	</li>
+    
+	</ul>
+	<ul class="nav navbar-nav pull-right">
+		<li><a href="/wiki/"><b>Wiki</b></a></li>
+	</ul>
+</div>
+
+        </nav>
+
+        <div class="row">
+            <article>
+                <div class="col col-lg-8">
+                    <div class="panel panel-default">
+                        
+<header>
+  <div class="page-header panel-heading">
+    <h2>ORM. Использование SQLAlchemy.</h2>
+  </div>
+</header>
+<p>Давным-давно, в доисторические времена, программистам приходилось
+изучать и конструировать сложные запросы к реляционным базам данных, что
+несколько усложняло работу (впрочем, на данный момент наметился тренд опять возвращаться к DSL для работы с БД). А когда появилось ООП увязать
+SQL запросы, код и новый стиль программирования стало еще сложнее.</p>
+<p>Итак что же такое ORM? Это не более чем абривиатура от Object
+Relational Mapping и по простому обозначает работу с таблицами баз
+данных как с объектами языка программирования. ORM является по сути дела
+высокоуровневой надстройкой над драйвером БД который переводит ваши
+запросы в язык (SQL, или какой-нибудь еще) запросов для базы данных с которой вы работаете; немного проигрывая в производительности, но зато существенно 
+упрощая разработку и поддержку проектов, делая работу с базами данных простой и понятной.</p>
+<blockquote>
+<p>ORM (англ. Object-relational mapping, русск. Объектно-реляционное
+отображение) — технология программирования, которая связывает базы
+данных с концепциями объектно-ориентированных языков программирования,
+создавая «виртуальную объектную базу данных». Существуют как
+коммерческие, так и свободные реализации этой технологии.</p>
+</blockquote>
+<p>Довольно часто для небольших скрипто нужна база данных, но не хочется лишних зависиомстей от наличия в системе mysql сервера, поэтому в этом случае удобно использовать так называемы <em>embedded database</em>, например sqlite, это гораздо удобнее и быстрее чем работать с кучей текстовых файлов. Если возникает потребность в редактировании данных - нет проблем существует отличный плагин для FF
+-<a href="http://code.google.com/p/sqlite-manager/">[http://code.google.com/p/sqlite-manager/](http://code.google.com/p/sqlite-manager/)</a></p>
+<p>Итак к делу. Для питона фактически стандарт ORM для работы с реляционными базами данных это <a href="http://www.sqlalchemy.org/">SQLAlchemy</a></p>
+<p>Базово работа с БД (на уровне ORM, т.к. SQLAlchemy позволяет работать с бд и другими способами) выглядит так :</p>
+<div class="codehilite"><pre><span class="cp"># -*- coding: utf-8 -*-</span>
+
+<span class="n">from</span> <span class="n">sqlalchemy</span> <span class="n">import</span> <span class="n">create_engine</span>
+<span class="n">from</span> <span class="n">sqlalchemy</span> <span class="n">import</span> <span class="n">MetaData</span>
+<span class="n">from</span> <span class="n">sqlalchemy</span><span class="p">.</span><span class="n">orm</span> <span class="n">import</span> <span class="n">mapper</span>
+<span class="n">from</span> <span class="n">sqlalchemy</span><span class="p">.</span><span class="n">orm</span> <span class="n">import</span> <span class="n">sessionmaker</span>
+<span class="n">from</span> <span class="n">sqlalchemy</span><span class="p">.</span><span class="n">ext</span><span class="p">.</span><span class="n">declarative</span> <span class="n">import</span> <span class="n">declarative_base</span>
+<span class="n">from</span> <span class="n">sqlalchemy</span> <span class="n">import</span> <span class="n">Column</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">Text</span><span class="p">,</span> <span class="n">String</span>
+
+<span class="n">Base</span> <span class="o">=</span> <span class="n">declarative_base</span><span class="p">()</span>
+
+<span class="cp"># определяем формат таблицы в БД.</span>
+<span class="cp"># как бы пост для блога.</span>
+<span class="n">class</span> <span class="n">CData</span><span class="p">(</span><span class="n">Base</span><span class="p">)</span><span class="o">:</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s">&quot;cdata&quot;</span>
+
+    <span class="n">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="n">True</span><span class="p">)</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Text</span><span class="p">)</span>
+
+    <span class="n">def</span> <span class="n">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span><span class="o">:</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">url</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">image</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">text</span>
+
+    <span class="n">def</span> <span class="n">__repr__</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
+        <span class="k">return</span> <span class="s">&quot;CData &#39;%s&#39;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">url</span><span class="p">)</span>
+
+<span class="n">db_engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&quot;sqlite:///data.db&quot;</span><span class="p">,</span> <span class="n">echo</span><span class="o">=</span><span class="n">True</span><span class="p">)</span>
+<span class="cp"># создадём таблицы</span>
+<span class="n">Base</span><span class="p">.</span><span class="n">metadata</span><span class="p">.</span><span class="n">create_all</span><span class="p">(</span><span class="n">db_engine</span><span class="p">)</span>
+
+<span class="cp"># начинаем новую сессию работы с БД</span>
+<span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">db_engine</span><span class="p">)</span>
+<span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+
+<span class="cp"># таким образом можно добавить новый элемент</span>
+<span class="n">new_element</span> <span class="o">=</span> <span class="n">CData</span><span class="p">(</span><span class="s">&quot;http://blog.com&quot;</span><span class="p">,</span> <span class="s">&quot;http://coolpix.com/img434.jpg&quot;</span><span class="p">,</span> <span class="s">&quot;Nice Post&quot;</span><span class="p">,</span> <span class="s">&quot;Mark spomoni as a faggot&quot;</span><span class="p">)</span>
+<span class="n">session</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">new_element</span><span class="p">)</span>
+
+<span class="cp"># посмотрим что уже есть в базе данных</span>
+<span class="k">for</span> <span class="n">instance</span> <span class="n">in</span> <span class="n">session</span><span class="p">.</span><span class="n">query</span><span class="p">(</span><span class="n">CData</span><span class="p">).</span><span class="n">order_by</span><span class="p">(</span><span class="n">CData</span><span class="p">.</span><span class="n">id</span><span class="p">)</span><span class="o">:</span>
+    <span class="n">print</span> <span class="n">instance</span><span class="p">.</span><span class="n">title</span>
+
+<span class="cp"># совершаем транзакцию</span>
+<span class="n">session</span><span class="p">.</span><span class="n">commit</span><span class="p">()</span>
+</pre></div>
+
+
+<p>Как видите все достаточно просто. Работать с базой данных становится так
+же удобно как и со структурами языка программирования. В
+современных фрэймворках для разработки сайта так или иначе используется
+ОРМ, в джанге это своя реализация django-orm, но со множестве других,
+таких как flask, pyramids в основном используется как раз <strong>SQLAlchemy</strong>.</p>
+<p>Дополнительные материалы.
+  ~ хорошая статья на русском языке <a href="http://solovyov.net/blog/2011/04/22/basic-sqlalchemy/">SQLAlchemy: как
+    втянуться</a>, статья от Armin Ronacher (разработчик фрэймворка Flask) <a href="http://lucumr.pocoo.org/2011/7/19/sqlachemy-and-you/">SQLAlchemy and You</a> и 
+    <a href="http://www.sqlalchemy.org/docs/">Официальная документация SQLAlchemy</a></p>
+
+<div class="comments-block">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'ninjasideblog'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+                    </div>
+                </div>
+            </article>
+            
+            <aside>
+                <div class="col col-lg-4">
+                    <div class="panel panel-default">
+                        <div class="page-header panel-heading">
+                            <h2>Sidebar</h2>
+                        </div>
+                        
+
+<ul class="nav nav-pills nav-stacked">
+	
+		
+		<li >
+			<a href="/category/cool-story-bro/">
+				cool-story-bro
+			</a>
+		</li>
+		
+	
+		
+		<li class="active">
+			<a href="/category/python/">
+				python
+			</a>
+		</li>
+		
+	
+		
+		<li >
+			<a href="/category/tech/">
+				tech
+			</a>
+		</li>
+		
+	
+ </ul>
+
+<hr>
+
+<div class=tags>
+  	<ul>
+	
+		<li class="tagRank10">
+			<a href="/tag/sqlite/" title="sqlite">sqlite</a>
+		</li>
+	
+		<li class="tagRank9">
+			<a href="/tag/sqlalchemy/" title="sqlalchemy">sqlalchemy</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/mongodb/" title="mongodb">mongodb</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/functional-programming/" title="functional-programming">functional-programming</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/blog/" title="blog">blog</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/ddos/" title="ddos">ddos</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/orm/" title="orm">orm</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/algorithms/" title="algorithms">algorithms</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/yandex/" title="yandex">yandex</a>
+		</li>
+	
+		<li class="tagRank9">
+			<a href="/tag/databases/" title="databases">databases</a>
+		</li>
+	
+		<li class="tagRank9">
+			<a href="/tag/code-fu/" title="code-fu">code-fu</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/tech/" title="tech">tech</a>
+		</li>
+	
+		<li class="tagRank9">
+			<a href="/tag/tips/" title="tips">tips</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/validation/" title="validation">validation</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/data/" title="data">data</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/snippets/" title="snippets">snippets</a>
+		</li>
+	
+	</ul>
+</div>
+
+
+                    </div>                  
+                </div>
+            </aside>
+        </div>
+
+        <footer>
+            <div class="panel">
+                
+<div class="panel-footer">
+	<p>&copy; Copyright 2013 Alex Istinspring</p>
+	<p><small><a class="no-pjax" href="/sitemap.xml">sitemap.xml</a></small></p>
+</div>
+
+            </div>
+        </footer>
+    </div>
+    
+
+    <script type="text/javascript">
+        $(document).pjax('a:not(.no-pjax)', '#main-container'); // Enable pjax for links
+        
+        // activate meny sidebar
+        var meny = Meny.create({
+            menuElement: document.querySelector('.meny'),
+            contentsElement: document.querySelector('.container'),
+            position: 'left',
+            height: 200, // The height of the menu (when using top/bottom position)
+            width: 200, // The width of the menu (when using left/right position)
+            mouse: true, // Use mouse movement to automatically open/close
+            touch: true // Use touch swipe events to open/close
+        });
+    </script>
+
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-10309863-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+</body>
+</html>

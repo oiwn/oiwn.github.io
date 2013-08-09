@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Использование Schematics для валидации данных</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description=" content="использование библиотеки Schematics для валидации данных (Python)">
+    <meta name="keywords" content="[&#39;data&#39;, &#39;validation&#39;, &#39;databases&#39;]">
+    <meta name="author" content="Alex Istinspring">
+    
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.pjax/1.7.0/jquery.pjax.min.js"></script>
+    <script type="text/javascript" src="/static/js/meny.min.js"></script>
+    <script type="text/javascript" src="/static/js/application.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/normalize/2.1.0/normalize.css" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/meny.css" />
+    <link rel="stylesheet" type="text/css" href="/pygments.css">
+    
+    <link rel="stylesheet" type="text/css" href="/static/css/layout.css" />
+    
+</head>
+
+<body>
+    <div class="meny">
+        
+        <ul>
+            <li><a href="http://github.com/istinspring">GitHub</a></li>
+            <li><a href="http://twitter.com/istinspring">Twitter</a></li>
+        </ul>
+    </div>
+
+    
+    <div class="container" id="main-container">
+        <nav>
+            
+<div class="navbar navbar-static-top">
+	<a class="navbar-brand" href="/"><b>Ninjaside</b></a>
+  	<ul class="nav navbar-nav">
+    
+    	<li>
+    		<a href="/page/experience/">
+    			Experience
+    		</a>
+    	</li>
+    
+    	<li>
+    		<a href="/page/about/">
+    			About
+    		</a>
+    	</li>
+    
+	</ul>
+	<ul class="nav navbar-nav pull-right">
+		<li><a href="/wiki/"><b>Wiki</b></a></li>
+	</ul>
+</div>
+
+        </nav>
+
+        <div class="row">
+            <article>
+                <div class="col col-lg-8">
+                    <div class="panel panel-default">
+                        
+<header>
+  <div class="page-header panel-heading">
+    <h2>Использование Schematics для валидации данных</h2>
+  </div>
+</header>
+<p>Все эти веб приложения и вебсайты по сути <em>умная</em> прослойка между базой данных и клиентом, какие-то данные идут от сервера к клиенту, какие-то от клиента на сервер. Обновить запись в базе данных? Браузер пользователя должен отправить форму или клиент сделать PUT к API. В любом случае необходимо или хотя бы очень желательно проверять соответствуют ли данные требуемой структуре, или пришла какая-то ерунда. Короче говоря имеется типичная задача - валидация данных, перед тем как отправить их дальше, особенно это актуально для schema-less баз данных, таких как MongoDB. Данные предварительно можно валидировать само собой и на клиенте, но это легко обходится используя curl или какой-нибудь плагин к браузеру (вроде RESTClient для FF). Поэтому основная борьба за чистоту данных и свободу от ошибок идет на server-side. Если вы используете комплексный фрэймворк вроде Django, то там скорее всего уже есть возможность проводить валидацию, на уровне форм и моделей. Но если вы используете один из множества микрофрэймворков, то скорее всего встроенной возможности для валидации нет.</p>
+<p>Вот как раз для таких случаев есть готовое <em>"standalone"</em> решение - <strong><a href="schematics">https://github.com/j2labs/schematics</a></strong></p>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">from</span> <span class="n">schematics</span><span class="p">.</span><span class="n">models</span> <span class="n">import</span> <span class="n">Model</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">from</span> <span class="n">schematics</span><span class="p">.</span><span class="n">types</span> <span class="n">import</span> <span class="n">StringType</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">class</span> <span class="n">Person</span><span class="p">(</span><span class="n">Model</span><span class="p">)</span><span class="o">:</span>
+<span class="p">...</span>     <span class="n">name</span> <span class="o">=</span> <span class="n">StringType</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="n">True</span><span class="p">)</span>
+<span class="p">...</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">person</span> <span class="o">=</span> <span class="n">Person</span><span class="p">({</span><span class="s">&quot;name&quot;</span><span class="o">:</span> <span class="n">u</span><span class="s">&quot;Dino Spomoni&quot;</span><span class="p">})</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">person</span><span class="p">.</span><span class="n">name</span>
+<span class="n">u</span><span class="s">&quot;Dino Spomoni&quot;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">person</span> <span class="o">=</span> <span class="n">Person</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">try</span><span class="o">:</span>
+<span class="p">...</span>     <span class="n">person</span><span class="p">.</span><span class="n">validate</span><span class="p">()</span>
+<span class="p">...</span> <span class="n">except</span> <span class="n">ValidationError</span><span class="p">,</span> <span class="n">e</span><span class="o">:</span>
+<span class="p">...</span>     <span class="n">print</span> <span class="n">e</span><span class="p">.</span><span class="n">messages</span>
+<span class="p">{</span><span class="s">&quot;name&quot;</span><span class="o">:</span> <span class="p">[</span><span class="n">u</span><span class="s">&quot;This field is required.&quot;</span><span class="p">]}</span>
+</pre></div>
+
+
+<p>Документация на данный момент не очень полная и не точно соответствует текущей dev версии - <a href="schematics%20documentation">https://schematics.readthedocs.org/en/latest/</a>. Поэтому лучше и полезнее сразу смотреть код библиотеки на github.</p>
+<h2>Использование schematics:</h2>
+<ul>
+<li>Валидация данных перед записью в базу данных</li>
+<li>Валидация данных которые приходят от клиента (запрос к API, сабмит формы)</li>
+<li>Использование whitelist и blacklist для преобразования данных с учетом уровней доступа клиента</li>
+<li>Использование schematics для описания моделей для schema-less/key-value баз данных.</li>
+</ul>
+<p>С учетом того, что schematics весьма просто расширяется и можно писать собственные валидаторы, то область применения может быть гораздо шире чем я предполагаю.</p>
+<p>И в конце, "живой" пример кастомного валидатора из реального проекта. Проверяет содержит ли логин пользователя что-то кроме цифр, букв и символов _ и -.</p>
+<div class="codehilite"><pre><span class="n">def</span> <span class="n">validate_login</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span><span class="o">:</span>
+    <span class="n">replace_non_alpha</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;_&quot;</span><span class="o">:</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="s">&quot;-&quot;</span><span class="o">:</span> <span class="s">&quot;&quot;</span><span class="p">}</span>
+    <span class="n">login_normalized</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span>
+        <span class="n">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">kv</span><span class="o">:</span> <span class="n">a</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="o">*</span><span class="n">kv</span><span class="p">),</span>
+        <span class="n">replace_non_alpha</span><span class="p">.</span><span class="n">iteritems</span><span class="p">(),</span> <span class="n">value</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">not</span> <span class="n">login_normalized</span><span class="p">.</span><span class="n">isalnum</span><span class="p">()</span><span class="o">:</span>
+        <span class="n">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s">&quot;Login {} contains wrong characters&quot;</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+</pre></div>
+
+<div class="comments-block">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'ninjasideblog'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+                    </div>
+                </div>
+            </article>
+            
+            <aside>
+                <div class="col col-lg-4">
+                    <div class="panel panel-default">
+                        <div class="page-header panel-heading">
+                            <h2>Sidebar</h2>
+                        </div>
+                        
+
+<ul class="nav nav-pills nav-stacked">
+	
+		
+		<li >
+			<a href="/category/cool-story-bro/">
+				cool-story-bro
+			</a>
+		</li>
+		
+	
+		
+		<li class="active">
+			<a href="/category/python/">
+				python
+			</a>
+		</li>
+		
+	
+		
+		<li >
+			<a href="/category/tech/">
+				tech
+			</a>
+		</li>
+		
+	
+ </ul>
+
+<hr>
+
+<div class=tags>
+  	<ul>
+	
+		<li class="tagRank10">
+			<a href="/tag/sqlite/" title="sqlite">sqlite</a>
+		</li>
+	
+		<li class="tagRank9">
+			<a href="/tag/sqlalchemy/" title="sqlalchemy">sqlalchemy</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/mongodb/" title="mongodb">mongodb</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/functional-programming/" title="functional-programming">functional-programming</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/blog/" title="blog">blog</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/ddos/" title="ddos">ddos</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/orm/" title="orm">orm</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/algorithms/" title="algorithms">algorithms</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/yandex/" title="yandex">yandex</a>
+		</li>
+	
+		<li class="tagRank9">
+			<a href="/tag/databases/" title="databases">databases</a>
+		</li>
+	
+		<li class="tagRank9">
+			<a href="/tag/code-fu/" title="code-fu">code-fu</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/tech/" title="tech">tech</a>
+		</li>
+	
+		<li class="tagRank9">
+			<a href="/tag/tips/" title="tips">tips</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/validation/" title="validation">validation</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/data/" title="data">data</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/snippets/" title="snippets">snippets</a>
+		</li>
+	
+	</ul>
+</div>
+
+
+                    </div>                  
+                </div>
+            </aside>
+        </div>
+
+        <footer>
+            <div class="panel">
+                
+<div class="panel-footer">
+	<p>&copy; Copyright 2013 Alex Istinspring</p>
+	<p><small><a class="no-pjax" href="/sitemap.xml">sitemap.xml</a></small></p>
+</div>
+
+            </div>
+        </footer>
+    </div>
+    
+
+    <script type="text/javascript">
+        $(document).pjax('a:not(.no-pjax)', '#main-container'); // Enable pjax for links
+        
+        // activate meny sidebar
+        var meny = Meny.create({
+            menuElement: document.querySelector('.meny'),
+            contentsElement: document.querySelector('.container'),
+            position: 'left',
+            height: 200, // The height of the menu (when using top/bottom position)
+            width: 200, // The width of the menu (when using left/right position)
+            mouse: true, // Use mouse movement to automatically open/close
+            touch: true // Use touch swipe events to open/close
+        });
+    </script>
+
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-10309863-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+</body>
+</html>

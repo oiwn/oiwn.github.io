@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>100 Гигабит ДДос</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description=" content="Скажите, Вы когда-нибудь сталкивались со 100 гигабитной атакой на подсеть?">
+    <meta name="keywords" content="[&#39;ddos&#39;, &#39;yandex&#39;]">
+    <meta name="author" content="Alex Istinspring">
+    
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.pjax/1.7.0/jquery.pjax.min.js"></script>
+    <script type="text/javascript" src="/static/js/meny.min.js"></script>
+    <script type="text/javascript" src="/static/js/application.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/normalize/2.1.0/normalize.css" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/meny.css" />
+    <link rel="stylesheet" type="text/css" href="/pygments.css">
+    
+    <link rel="stylesheet" type="text/css" href="/static/css/layout.css" />
+    
+</head>
+
+<body>
+    <div class="meny">
+        
+        <ul>
+            <li><a href="http://github.com/istinspring">GitHub</a></li>
+            <li><a href="http://twitter.com/istinspring">Twitter</a></li>
+        </ul>
+    </div>
+
+    
+    <div class="container" id="main-container">
+        <nav>
+            
+<div class="navbar navbar-static-top">
+	<a class="navbar-brand" href="/"><b>Ninjaside</b></a>
+  	<ul class="nav navbar-nav">
+    
+    	<li>
+    		<a href="/page/experience/">
+    			Experience
+    		</a>
+    	</li>
+    
+    	<li>
+    		<a href="/page/about/">
+    			About
+    		</a>
+    	</li>
+    
+	</ul>
+	<ul class="nav navbar-nav pull-right">
+		<li><a href="/wiki/"><b>Wiki</b></a></li>
+	</ul>
+</div>
+
+        </nav>
+
+        <div class="row">
+            <article>
+                <div class="col col-lg-8">
+                    <div class="panel panel-default">
+                        
+<header>
+  <div class="page-header panel-heading">
+    <h2>100 Гигабит ДДос</h2>
+  </div>
+</header>
+<p>На хабре раньше лежала. Зачем было удалять, непонятно. Но гугл услужливо сохранил копию в кэше.</p>
+<h2>100+ Гбит/с DDoS</h2>
+<p>Скажите, Вы когда-нибудь сталкивались со 100 гигабитной атакой на подсеть?
+Когда-нибудь кто-нибудь видел как лежит yandex? rtcomm? ukrtel? darpa? evoswitch? webazilla?
+Сеть в мир небольшой европейской страны? И не дай-бог Вам увидеть подобное.
+Если кто-то думал, есть ли термоядерное оружие в интернет — оно есть.</p>
+<h2>Затишье перед бурей - 25 сентября 2010 г.</h2>
+<p><strong>18:25</strong><br />
+    На один IP адрес в нашей сети начинается атака, стандартный UDP flood
+    случайными пакетами. Просим дц закрыть UDP траффик на IP, никто больше
+    10 гбит/с не атакуют верно?<br />
+<strong>18:35</strong><br />
+    Дц рапортует о блокировки с красивым графиком падения нагрузки на порт.<br />
+<strong>18:40</strong> <br />
+    Предпоследний вопрос получил ответ — неверно! На IP дали 40 гбит/с UDP
+    flood на всю подсеть (512 IP /23). Провайдер null рутнул всю подсеть.
+    Подсеть не с нашей AS. Сделать ничего невозможно.  </p>
+<h2>27 сентября 2010 г.</h2>
+<p><strong>17:30</strong><br />
+    После объяснительной нашу сеть включают, естественно атакованного
+    попросили уйти, сменить А запись и забыть про наш хостинг еще 25-ого,
+    пару дц положил он гуляя (кажется netdirekt и какой-то украинский).  </p>
+<h2>Doomsday - 7 октября 2010 г.</h2>
+<p><strong>10:30</strong><br />
+    На клиента-хостера, а точнее его клиента (code-named товарищ) в
+    небольшой подсети дали атаку в 10 гбит/с, т.к. мы на «испытательном
+    сроке», с PA подсетями туго, решили блокировать IP, попросили
+    нуллрутнуть. Не тут-то было, старый друг вернулся. Венгерские каналы за
+    рубеж для многих сайтов закрылись, обратно тоже самое. Атака в 100
+    гбит/с положила международные каналы проверки EU VAT, банковские каналы,
+    основной канал фондовой биржи, ADSL сети и несколько ДЦ. Для локальных
+    пользователей пол-Европы не было видно. Нас рутят в ноль.<br />
+<strong>13:44</strong><br />
+    По данным дц, спустя 1 час после дропа IP атака продолжалась на другие
+    подсети их AS. По данным от клиента они попытались перенести сайт на
+    Leaseweb, IP сменили. Evoswitch частично лег моментально, пока не
+    зануллраутили IP. При смене A записи у домена атака начиналась
+    моментально в 10 гбит/с постепенно увеличиваясь.<br />
+<strong>18:17</strong><br />
+    Товарищ сделал 127.0.0.1 у домена.  </p>
+<h2>Утро вечера не мудренее - 8 октября 2010 г.</h2>
+<p><strong>10:30</strong><br />
+    Клиент сообщает, что после переноса сайта товарища в дц webazilla на
+    него опять полилось 60 гбит/с<br />
+<strong>11:57</strong><br />
+    Вебазилла умоляет убрать из домена A запись, т.к. магистральщики
+    умирать начинают — льется больше 100 гбит/с.  </p>
+<h2>Весело да?</h2>
+<p>После этого товарищ попрыгал по антиддосерам (укртелеком и еще какие-то вроде sharktech и еще кто-то), 
+сайты которых быстро валились и подсети тоже.<br />
+Напомню смена A записи моментальна давала атаку, а нулрут — атаку на под-сеть, мулти-запись А — мулти-атаку!
+Тут увидел что яндекс не открывается, как оказалось все довольно просто: когда товарищ уже видимо от безысходности и глупости вписывал IP адреса darpa.mil, yandex.ru, голдентелекома, google и еще кого-то, 
+атака продолжалась на эти IP, никто не продержался.<br />
+Представьте у Вас шланг — в виде A записи, с возможностью направить куда угодно и уничтожить почти, 
+что угодно. Попросил клиента уговорить товарища (т.к. не смыслил он, что творил, или смыслил?) 
+прекратить делать окружающим также плохо как и ему и прописать 0.0.0.0 или 127.0.0.1.  </p>
+<h2>Чудо случилось к 21:00 — darpa.mil поднялась, а ддос магически исчез</h2>
+<p>Встает вопрос: как бороться с этим, без nullрута подсетей? 36 часов атаки, кто на такое вообще способен? 
+И сколько такое вообще может стоить?  </p>
+<p>P.S.: Мои подсети до сих пор не включили, магистральщики боятся и просят
+ждать 72 часа. Дц боится вообще прикасаться к ним, оно и ясно, у них SLA
+99.9% дважды нарушено, выходит они и нам должны и остальным клиентам,
+проще им с нами судиться, чем если что, с тысячами их клиентов.  </p>
+<p>Пара ссылок по теме:<br />
+    [http://lenta.ru/news/2010/10/08/ddos/]<br />
+    [http://lenta.ru/news/2010/10/08/yandex/]  </p>
+
+<div class="comments-block">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'ninjasideblog'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+                    </div>
+                </div>
+            </article>
+            
+            <aside>
+                <div class="col col-lg-4">
+                    <div class="panel panel-default">
+                        <div class="page-header panel-heading">
+                            <h2>Sidebar</h2>
+                        </div>
+                        
+
+<ul class="nav nav-pills nav-stacked">
+	
+		
+		<li class="active">
+			<a href="/category/cool-story-bro/">
+				cool-story-bro
+			</a>
+		</li>
+		
+	
+		
+		<li >
+			<a href="/category/python/">
+				python
+			</a>
+		</li>
+		
+	
+		
+		<li >
+			<a href="/category/tech/">
+				tech
+			</a>
+		</li>
+		
+	
+ </ul>
+
+<hr>
+
+<div class=tags>
+  	<ul>
+	
+		<li class="tagRank10">
+			<a href="/tag/sqlite/" title="sqlite">sqlite</a>
+		</li>
+	
+		<li class="tagRank9">
+			<a href="/tag/sqlalchemy/" title="sqlalchemy">sqlalchemy</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/mongodb/" title="mongodb">mongodb</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/functional-programming/" title="functional-programming">functional-programming</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/blog/" title="blog">blog</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/ddos/" title="ddos">ddos</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/orm/" title="orm">orm</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/algorithms/" title="algorithms">algorithms</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/yandex/" title="yandex">yandex</a>
+		</li>
+	
+		<li class="tagRank9">
+			<a href="/tag/databases/" title="databases">databases</a>
+		</li>
+	
+		<li class="tagRank9">
+			<a href="/tag/code-fu/" title="code-fu">code-fu</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/tech/" title="tech">tech</a>
+		</li>
+	
+		<li class="tagRank9">
+			<a href="/tag/tips/" title="tips">tips</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/validation/" title="validation">validation</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/data/" title="data">data</a>
+		</li>
+	
+		<li class="tagRank10">
+			<a href="/tag/snippets/" title="snippets">snippets</a>
+		</li>
+	
+	</ul>
+</div>
+
+
+                    </div>                  
+                </div>
+            </aside>
+        </div>
+
+        <footer>
+            <div class="panel">
+                
+<div class="panel-footer">
+	<p>&copy; Copyright 2013 Alex Istinspring</p>
+	<p><small><a class="no-pjax" href="/sitemap.xml">sitemap.xml</a></small></p>
+</div>
+
+            </div>
+        </footer>
+    </div>
+    
+
+    <script type="text/javascript">
+        $(document).pjax('a:not(.no-pjax)', '#main-container'); // Enable pjax for links
+        
+        // activate meny sidebar
+        var meny = Meny.create({
+            menuElement: document.querySelector('.meny'),
+            contentsElement: document.querySelector('.container'),
+            position: 'left',
+            height: 200, // The height of the menu (when using top/bottom position)
+            width: 200, // The width of the menu (when using left/right position)
+            mouse: true, // Use mouse movement to automatically open/close
+            touch: true // Use touch swipe events to open/close
+        });
+    </script>
+
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-10309863-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+</body>
+</html>
