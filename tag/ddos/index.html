@@ -9,18 +9,16 @@
     <meta name="author" content="Alex Istinspring">
     <meta name="robots" content="noindex">
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.pjax/1.7.0/jquery.pjax.min.js"></script>
     <script type="text/javascript" src="/static/js/meny.min.js"></script>
     <script type="text/javascript" src="/static/js/application.js"></script>
     
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/normalize/2.1.0/normalize.css" />
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap-united.min.css" />
     <link rel="stylesheet" type="text/css" href="/static/css/meny.css" />
     <link rel="stylesheet" type="text/css" href="/pygments.css">
-    
     <link rel="stylesheet" type="text/css" href="/static/css/layout.css" />
-    
 </head>
 
 <body>
@@ -34,11 +32,13 @@
 
     
     <div class="container" id="main-container">
-        <nav>
+        <nav class="navbar navbar-default" role="navigation">
             
-<div class="navbar navbar-static-top">
-	<a class="navbar-brand" href="/"><b>Ninjaside</b></a>
-  	<ul class="nav navbar-nav">
+<!--div class="navbar navbar-static-top"-->
+    <div class="navbar-header">
+	   <a class="navbar-brand" href="/"><b>Ninjaside</b></a>
+  	</div>
+    <ul class="nav navbar-nav">
     
     	<li>
     		<a href="/page/experience/">
@@ -56,22 +56,22 @@
 	<ul class="nav navbar-nav pull-right">
 		<li><a href="/wiki/"><b>Wiki</b></a></li>
 	</ul>
-</div>
+<!--/div-->
 
         </nav>
 
         <div class="row">
+            
             <article>
                 <div class="col col-lg-8">
                     <div class="panel panel-default">
                         
-<header>
-<div class="page-header panel-heading">
-  <h2>Articles with tag <b>ddos</b></h2>
+<div class="panel-heading">
+    <header><h2>Articles with tag <b>ddos</b></h2></header>
 </div>
-</header>
 
-<ul>
+<div class="panel-body">
+    <ul>
     
     <li>
         <small>2010-10-26 05:31</small>
@@ -83,7 +83,9 @@
     </li>
     
 </ul>
+</div>
 
+                        <div class="panel-footer"></div>
                     </div>
                 </div>
             </article>
@@ -91,10 +93,11 @@
             <aside>
                 <div class="col col-lg-4">
                     <div class="panel panel-default">
-                        <div class="page-header panel-heading">
+                        <div class="panel-heading">
                             <h2>Sidebar</h2>
                         </div>
-                        
+                        <div class="panel-body">
+                            
 <ul class="nav nav-pills nav-stacked">
 	
 		
@@ -209,15 +212,16 @@
 	</ul>
 </div>
 
+                        </div>
                     </div>                  
                 </div>
             </aside>
         </div>
 
         <footer>
-            <div class="panel">
+            <div class="panel panel-default">
                 
-<div class="panel-footer">
+<div class="panel-body">
 	<p>&copy; Copyright 2013 Alex Istinspring</p>
 	<p><small><a class="no-pjax" href="/sitemap.xml">sitemap.xml</a></small></p>
 </div>
@@ -241,7 +245,6 @@
             touch: true // Use touch swipe events to open/close
         });
     </script>
-
     <script type="text/javascript">
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-10309863-1']);

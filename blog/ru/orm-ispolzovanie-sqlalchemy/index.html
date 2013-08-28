@@ -5,22 +5,20 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description=" content="Использование SQLAlchemy для работы с реляционными базами данных.">
-    <meta name="keywords" content="[&#39;code-fu&#39;, &#39;orm&#39;]">
+    <meta name="keywords" content="code-fu, orm">
     <meta name="author" content="Alex Istinspring">
     
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.pjax/1.7.0/jquery.pjax.min.js"></script>
     <script type="text/javascript" src="/static/js/meny.min.js"></script>
     <script type="text/javascript" src="/static/js/application.js"></script>
     
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/normalize/2.1.0/normalize.css" />
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap-united.min.css" />
     <link rel="stylesheet" type="text/css" href="/static/css/meny.css" />
     <link rel="stylesheet" type="text/css" href="/pygments.css">
-    
     <link rel="stylesheet" type="text/css" href="/static/css/layout.css" />
-    
 </head>
 
 <body>
@@ -34,11 +32,13 @@
 
     
     <div class="container" id="main-container">
-        <nav>
+        <nav class="navbar navbar-default" role="navigation">
             
-<div class="navbar navbar-static-top">
-	<a class="navbar-brand" href="/"><b>Ninjaside</b></a>
-  	<ul class="nav navbar-nav">
+<!--div class="navbar navbar-static-top"-->
+    <div class="navbar-header">
+	   <a class="navbar-brand" href="/"><b>Ninjaside</b></a>
+  	</div>
+    <ul class="nav navbar-nav">
     
     	<li>
     		<a href="/page/experience/">
@@ -56,24 +56,24 @@
 	<ul class="nav navbar-nav pull-right">
 		<li><a href="/wiki/"><b>Wiki</b></a></li>
 	</ul>
-</div>
+<!--/div-->
 
         </nav>
 
         <div class="row">
+            
             <article>
                 <div class="col col-lg-8">
                     <div class="panel panel-default">
                         
-<header>
-  <div class="page-header panel-heading">
-    <h2>ORM. Использование SQLAlchemy.</h2>
-  </div>
-</header>
+<div class="panel-heading">
+    <header><h2>ORM. Использование SQLAlchemy.</h2></header>
+</div>
 
-<p class="text-right"><small>2011-05-31 02:58</small></p>
+<div class="panel-body">
+    <p class="text-right"><small>2011-05-31 02:58</small></p>
 
-<p>Давным-давно, в доисторические времена, программистам приходилось
+    <p>Давным-давно, в доисторические времена, программистам приходилось
 изучать и конструировать сложные запросы к реляционным базам данных, что
 несколько усложняло работу (впрочем, на данный момент наметился тренд опять возвращаться к DSL для работы с БД). А когда появилось ООП увязать
 SQL запросы, код и новый стиль программирования стало еще сложнее.</p>
@@ -94,55 +94,55 @@ Relational Mapping и по простому обозначает работу с
 -<a href="http://code.google.com/p/sqlite-manager/">[http://code.google.com/p/sqlite-manager/](http://code.google.com/p/sqlite-manager/)</a></p>
 <p>Итак к делу. Для питона фактически стандарт ORM для работы с реляционными базами данных это <a href="http://www.sqlalchemy.org/">SQLAlchemy</a></p>
 <p>Базово работа с БД (на уровне ORM, т.к. SQLAlchemy позволяет работать с бд и другими способами) выглядит так :</p>
-<div class="codehilite"><pre><span class="cp"># -*- coding: utf-8 -*-</span>
+<div class="codehilite"><pre><span class="c"># -*- coding: utf-8 -*-</span>
 
-<span class="n">from</span> <span class="n">sqlalchemy</span> <span class="n">import</span> <span class="n">create_engine</span>
-<span class="n">from</span> <span class="n">sqlalchemy</span> <span class="n">import</span> <span class="n">MetaData</span>
-<span class="n">from</span> <span class="n">sqlalchemy</span><span class="p">.</span><span class="n">orm</span> <span class="n">import</span> <span class="n">mapper</span>
-<span class="n">from</span> <span class="n">sqlalchemy</span><span class="p">.</span><span class="n">orm</span> <span class="n">import</span> <span class="n">sessionmaker</span>
-<span class="n">from</span> <span class="n">sqlalchemy</span><span class="p">.</span><span class="n">ext</span><span class="p">.</span><span class="n">declarative</span> <span class="n">import</span> <span class="n">declarative_base</span>
-<span class="n">from</span> <span class="n">sqlalchemy</span> <span class="n">import</span> <span class="n">Column</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">Text</span><span class="p">,</span> <span class="n">String</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">MetaData</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">mapper</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">sessionmaker</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.ext.declarative</span> <span class="kn">import</span> <span class="n">declarative_base</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Column</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">Text</span><span class="p">,</span> <span class="n">String</span>
 
 <span class="n">Base</span> <span class="o">=</span> <span class="n">declarative_base</span><span class="p">()</span>
 
-<span class="cp"># определяем формат таблицы в БД.</span>
-<span class="cp"># как бы пост для блога.</span>
-<span class="n">class</span> <span class="n">CData</span><span class="p">(</span><span class="n">Base</span><span class="p">)</span><span class="o">:</span>
+<span class="c"># определяем формат таблицы в БД.</span>
+<span class="c"># как бы пост для блога.</span>
+<span class="k">class</span> <span class="nc">CData</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
     <span class="n">__tablename__</span> <span class="o">=</span> <span class="s">&quot;cdata&quot;</span>
 
-    <span class="n">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="n">True</span><span class="p">)</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
     <span class="n">url</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
     <span class="n">image</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
     <span class="n">title</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
     <span class="n">text</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Text</span><span class="p">)</span>
 
-    <span class="n">def</span> <span class="n">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span><span class="o">:</span>
-        <span class="n">self</span><span class="p">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">url</span>
-        <span class="n">self</span><span class="p">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">image</span>
-        <span class="n">self</span><span class="p">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span>
-        <span class="n">self</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">text</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">url</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">image</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">text</span>
 
-    <span class="n">def</span> <span class="n">__repr__</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="o">:</span>
-        <span class="k">return</span> <span class="s">&quot;CData &#39;%s&#39;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&quot;CData &#39;</span><span class="si">%s</span><span class="s">&#39;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
 
-<span class="n">db_engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&quot;sqlite:///data.db&quot;</span><span class="p">,</span> <span class="n">echo</span><span class="o">=</span><span class="n">True</span><span class="p">)</span>
-<span class="cp"># создадём таблицы</span>
-<span class="n">Base</span><span class="p">.</span><span class="n">metadata</span><span class="p">.</span><span class="n">create_all</span><span class="p">(</span><span class="n">db_engine</span><span class="p">)</span>
+<span class="n">db_engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&quot;sqlite:///data.db&quot;</span><span class="p">,</span> <span class="n">echo</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="c"># создадём таблицы</span>
+<span class="n">Base</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">create_all</span><span class="p">(</span><span class="n">db_engine</span><span class="p">)</span>
 
-<span class="cp"># начинаем новую сессию работы с БД</span>
+<span class="c"># начинаем новую сессию работы с БД</span>
 <span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">db_engine</span><span class="p">)</span>
 <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
 
-<span class="cp"># таким образом можно добавить новый элемент</span>
+<span class="c"># таким образом можно добавить новый элемент</span>
 <span class="n">new_element</span> <span class="o">=</span> <span class="n">CData</span><span class="p">(</span><span class="s">&quot;http://blog.com&quot;</span><span class="p">,</span> <span class="s">&quot;http://coolpix.com/img434.jpg&quot;</span><span class="p">,</span> <span class="s">&quot;Nice Post&quot;</span><span class="p">,</span> <span class="s">&quot;Mark spomoni as a faggot&quot;</span><span class="p">)</span>
-<span class="n">session</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">new_element</span><span class="p">)</span>
+<span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">new_element</span><span class="p">)</span>
 
-<span class="cp"># посмотрим что уже есть в базе данных</span>
-<span class="k">for</span> <span class="n">instance</span> <span class="n">in</span> <span class="n">session</span><span class="p">.</span><span class="n">query</span><span class="p">(</span><span class="n">CData</span><span class="p">).</span><span class="n">order_by</span><span class="p">(</span><span class="n">CData</span><span class="p">.</span><span class="n">id</span><span class="p">)</span><span class="o">:</span>
-    <span class="n">print</span> <span class="n">instance</span><span class="p">.</span><span class="n">title</span>
+<span class="c"># посмотрим что уже есть в базе данных</span>
+<span class="k">for</span> <span class="n">instance</span> <span class="ow">in</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">CData</span><span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">CData</span><span class="o">.</span><span class="n">id</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">instance</span><span class="o">.</span><span class="n">title</span>
 
-<span class="cp"># совершаем транзакцию</span>
-<span class="n">session</span><span class="p">.</span><span class="n">commit</span><span class="p">()</span>
+<span class="c"># совершаем транзакцию</span>
+<span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
 </pre></div>
 
 
@@ -156,23 +156,25 @@ Relational Mapping и по простому обозначает работу с
     втянуться</a>, статья от Armin Ronacher (разработчик фрэймворка Flask) <a href="http://lucumr.pocoo.org/2011/7/19/sqlachemy-and-you/">SQLAlchemy and You</a> и 
     <a href="http://www.sqlalchemy.org/docs/">Официальная документация SQLAlchemy</a></p>
 
-<div class="comments-block">
-    <div id="disqus_thread"></div>
-    <script type="text/javascript">
-        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-        var disqus_shortname = 'ninjasideblog'; // required: replace example with your forum shortname
+    <div class="comments-block">
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+            var disqus_shortname = 'ninjasideblog'; // required: replace example with your forum shortname
 
-        /* * * DON'T EDIT BELOW THIS LINE * * */
-        (function() {
-            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </div>
 </div>
 
+                        <div class="panel-footer"></div>
                     </div>
                 </div>
             </article>
@@ -180,10 +182,11 @@ Relational Mapping и по простому обозначает работу с
             <aside>
                 <div class="col col-lg-4">
                     <div class="panel panel-default">
-                        <div class="page-header panel-heading">
+                        <div class="panel-heading">
                             <h2>Sidebar</h2>
                         </div>
-                        
+                        <div class="panel-body">
+                            
 <ul class="nav nav-pills nav-stacked">
 	
 		
@@ -298,15 +301,16 @@ Relational Mapping и по простому обозначает работу с
 	</ul>
 </div>
 
+                        </div>
                     </div>                  
                 </div>
             </aside>
         </div>
 
         <footer>
-            <div class="panel">
+            <div class="panel panel-default">
                 
-<div class="panel-footer">
+<div class="panel-body">
 	<p>&copy; Copyright 2013 Alex Istinspring</p>
 	<p><small><a class="no-pjax" href="/sitemap.xml">sitemap.xml</a></small></p>
 </div>
@@ -330,7 +334,6 @@ Relational Mapping и по простому обозначает работу с
             touch: true // Use touch swipe events to open/close
         });
     </script>
-
     <script type="text/javascript">
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-10309863-1']);

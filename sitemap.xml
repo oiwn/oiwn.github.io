@@ -2,50 +2,50 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>http://ninjaside.info/page/experience/</loc>
-        <lastmod>2013-05-15T22:16:00</lastmod>
+        <lastmod>2013-05-15</lastmod>
     </url>
     <url>
         <loc>http://ninjaside.info/page/about/</loc>
-        <lastmod>2013-06-10T01:14:00</lastmod>
+        <lastmod>2013-06-10</lastmod>
     </url>
     <url>
         <loc>http://ninjaside.info/blog/ru/schematics-dlya-validacii-dannih/</loc>
-        <lastmod>2013-08-02T21:23:00</lastmod>
+        <lastmod>2013-08-02</lastmod>
     </url>
     <url>
         <loc>http://ninjaside.info/blog/ru/tuning-skorosti-sqlite-v-sqlalchemy/</loc>
-        <lastmod>2013-07-30T02:33:00</lastmod>
+        <lastmod>2013-07-30</lastmod>
     </url>
     <url>
         <loc>http://ninjaside.info/blog/ru/ne-zabivaite-pro-indexi/</loc>
-        <lastmod>2013-07-17T02:33:00</lastmod>
+        <lastmod>2013-07-17</lastmod>
     </url>
     <url>
         <loc>http://ninjaside.info/blog/ru/about-this-blog/</loc>
-        <lastmod>2013-07-13T14:51:00</lastmod>
+        <lastmod>2013-07-13</lastmod>
     </url>
     <url>
         <loc>http://ninjaside.info/blog/ru/kopirovanie-failov-po-ssh/</loc>
-        <lastmod>2012-03-10T08:35:00</lastmod>
+        <lastmod>2012-03-10</lastmod>
     </url>
     <url>
         <loc>http://ninjaside.info/blog/ru/orm-ispolzovanie-sqlalchemy/</loc>
-        <lastmod>2011-05-31T02:58:00</lastmod>
+        <lastmod>2011-05-31</lastmod>
     </url>
     <url>
         <loc>http://ninjaside.info/blog/ru/geneticheskie-algoritmy-hello-world/</loc>
-        <lastmod>2011-05-08T23:16:00</lastmod>
+        <lastmod>2011-05-08</lastmod>
     </url>
     <url>
         <loc>http://ninjaside.info/blog/ru/funkcii-map-i-zip-i-lambda-python/</loc>
-        <lastmod>2010-11-17T09:47:00</lastmod>
+        <lastmod>2010-11-17</lastmod>
     </url>
     <url>
         <loc>http://ninjaside.info/blog/ru/xranenie-nastroek-python/</loc>
-        <lastmod>2010-11-10T05:48:00</lastmod>
+        <lastmod>2010-11-10</lastmod>
     </url>
     <url>
         <loc>http://ninjaside.info/blog/ru/100gigabit-ddos/</loc>
-        <lastmod>2010-10-26T05:31:00</lastmod>
+        <lastmod>2010-10-26</lastmod>
     </url>
 </urlset>
