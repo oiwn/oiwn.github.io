@@ -8,7 +8,7 @@
     <meta name="keywords" content="snippets, tips">
     <meta name="author" content="Alex Istinspring">
     
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.pjax/1.7.0/jquery.pjax.min.js"></script>
     <script type="text/javascript" src="/static/js/meny.min.js"></script>
@@ -24,9 +24,16 @@
 <body>
     <div class="meny">
         
+        <h3>Social Profiles</h3>
         <ul>
             <li><a href="http://github.com/istinspring">GitHub</a></li>
             <li><a href="http://twitter.com/istinspring">Twitter</a></li>
+        </ul>
+        <h3>My Projects</h3>
+        <ul>
+            <li><a href="http://tamp3cords.com" title="Tamrecords (drum and bass record label)">Tamrecords</a></li>
+            <li><a href="http://dentaldaily.ru" title="Russian dental journal and meta search engine">Dental Daily</a></li>
+            <li><a href="http://grablab.com" title="Web scraping service">GrabLab</a></li>
         </ul>
     </div>
 
@@ -38,41 +45,46 @@
     <div class="navbar-header">
 	   <a class="navbar-brand" href="/"><b>Ninjaside</b></a>
   	</div>
+
     <ul class="nav navbar-nav">
     
-    	<li>
-    		<a href="/page/experience/">
-    			Experience
-    		</a>
-    	</li>
+        <li>
+            <a href="/page/experience/">
+                Experience
+            </a>
+        </li>
     
-    	<li>
-    		<a href="/page/about/">
-    			About
-    		</a>
-    	</li>
+        <li>
+            <a href="/page/about/">
+                About
+            </a>
+        </li>
     
-	</ul>
-	<ul class="nav navbar-nav pull-right">
+    </ul>
+
+	<ul class="nav navbar-nav navbar-right">
 		<li><a href="/wiki/"><b>Wiki</b></a></li>
 	</ul>
 <!--/div-->
 
         </nav>
 
-        <div class="row">
+        <div class="row" id="content-container">
             
             <article>
                 <div class="col col-lg-8">
-                    <div class="panel panel-default">
-                        
+                    
+<div itemscope itemtype="http://schema.org/BlogPosting">
+    <div class="panel panel-default">
+
 <div class="panel-heading">
-    <header><h2>Хранение настроек для проекта на Python.</h2></header>
+    <h1 class="panel-title"><span itemprop="name">Хранение настроек для проекта на Python.</span></h1>
 </div>
 
 <div class="panel-body">
-    <p class="text-right"><small>2010-11-10 05:48</small></p>
+    <p class="text-right"><small><span itemprop="datePublished">2010-11-10 05:48</span></small></p>
 
+    <div itemprop="articleBody">
     <p>Часто настроек в приложении может быть дофига и невольно задумываешься о
 том, чтобы вынести их в отдельный файл - <strong>файл настроек</strong>. Бывает
 программисты по инерции начинают писать код который будет считывать и
@@ -113,8 +125,9 @@
 
 
 <p>Вышеприведенный пример еще интересен тем что позволяет написать код, который будет подгружать, к примеру, все файлы из какой-то папки.</p>
+    </div>
 
-    <div class="comments-block">
+    <div class="comments-block" itemprop="comment">
         <div id="disqus_thread"></div>
         <script type="text/javascript">
             /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
@@ -132,8 +145,9 @@
     </div>
 </div>
 
-                        <div class="panel-footer"></div>
-                    </div>
+    </div>
+</div>
+
                 </div>
             </article>
             
@@ -141,136 +155,155 @@
                 <div class="col col-lg-4">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h2>Sidebar</h2>
+                            <h2 class="panel-title">Sidebar</h2>
                         </div>
-                        <div class="panel-body">
-                            
+                        
+<div class="panel-body">
+    <div class="btn-group btn-group-justified">
+        
+        <a href="/blog/" class="btn btn-info">Blog (programming)</a>
+        <a href="/music/" class="btn btn-success">Music</a>
+        
+    </div>
+</div>
+<div class="panel-body">
 <ul class="nav nav-pills nav-stacked">
-	
-		
-		<li >
-			<a href="/category/cool-story-bro/">
-				cool-story-bro
-			</a>
-		</li>
-		
-	
-		
-		<li >
-			<a href="/category/linux/">
-				linux
-			</a>
-		</li>
-		
-	
-		
-		<li class="active">
-			<a href="/category/python/">
-				python
-			</a>
-		</li>
-		
-	
-		
-		<li >
-			<a href="/category/tech/">
-				tech
-			</a>
-		</li>
-		
-	
- </ul>
-<hr>
-<div class="tags">
-  	<ul class="list-unstyled">
-	
-		<li class="tagRank10">
-			<a href="/tag/sqlite/" title="sqlite">sqlite</a>
-		</li>
-	
-		<li class="tagRank9">
-			<a href="/tag/sqlalchemy/" title="sqlalchemy">sqlalchemy</a>
-		</li>
-	
-		<li class="tagRank10">
-			<a href="/tag/mongodb/" title="mongodb">mongodb</a>
-		</li>
-	
-		<li class="tagRank10">
-			<a href="/tag/functional-programming/" title="functional-programming">functional-programming</a>
-		</li>
-	
-		<li class="tagRank10">
-			<a href="/tag/linux/" title="linux">linux</a>
-		</li>
-	
-		<li class="tagRank10">
-			<a href="/tag/server/" title="server">server</a>
-		</li>
-	
-		<li class="tagRank10">
-			<a href="/tag/blog/" title="blog">blog</a>
-		</li>
-	
-		<li class="tagRank10">
-			<a href="/tag/ddos/" title="ddos">ddos</a>
-		</li>
-	
-		<li class="tagRank10">
-			<a href="/tag/orm/" title="orm">orm</a>
-		</li>
-	
-		<li class="tagRank10">
-			<a href="/tag/algorithms/" title="algorithms">algorithms</a>
-		</li>
-	
-		<li class="tagRank10">
-			<a href="/tag/yandex/" title="yandex">yandex</a>
-		</li>
-	
-		<li class="tagRank9">
-			<a href="/tag/databases/" title="databases">databases</a>
-		</li>
-	
-		<li class="tagRank9">
-			<a href="/tag/code-fu/" title="code-fu">code-fu</a>
-		</li>
-	
-		<li class="tagRank10">
-			<a href="/tag/tech/" title="tech">tech</a>
-		</li>
-	
-		<li class="tagRank9">
-			<a href="/tag/tips/" title="tips"><b class="current-tag">tips</b></a>
-		</li>
-	
-		<li class="tagRank10">
-			<a href="/tag/validation/" title="validation">validation</a>
-		</li>
-	
-		<li class="tagRank10">
-			<a href="/tag/data/" title="data">data</a>
-		</li>
-	
-		<li class="tagRank10">
-			<a href="/tag/snippets/" title="snippets"><b class="current-tag">snippets</b></a>
-		</li>
-	
-	</ul>
+    <li >
+        <a href="/category/cool-story-bro/">
+            cool-story-bro <span class="badge pull-right">1</span>
+        </a>
+    </li>
+    <li >
+        <a href="/category/linux/">
+            linux <span class="badge pull-right">2</span>
+        </a>
+    </li>
+    <li class="active">
+        <a href="/category/python/">
+            python <span class="badge pull-right">9</span>
+        </a>
+    </li>
+    <li >
+        <a href="/category/sampling/">
+            sampling <span class="badge pull-right">1</span>
+        </a>
+    </li>
+    <li >
+        <a href="/category/tech/">
+            tech <span class="badge pull-right">1</span>
+        </a>
+    </li>
+</ul>
+</div>
+<div class="panel-body">
+    <div class="tags">
+      	<ul class="list-unstyled">
+    		<li class="tagRank10">
+    			<a href="/tag/sqlite/" title="sqlite">sqlite</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/functional-programming/" title="functional-programming">functional-programming</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/glitch/" title="glitch">glitch</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/ddos/" title="ddos">ddos</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/yandex/" title="yandex">yandex</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/io/" title="io">io</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/linux/" title="linux">linux</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/n/" title="n">n</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/snippets/" title="snippets"><b class="current-tag">snippets</b></a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/%20/" title=" "> </a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/how-to/" title="how-to">how-to</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/%2C/" title=",">,</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/blog/" title="blog">blog</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/tech/" title="tech">tech</a>
+    		</li>
+    		<li class="tagRank9">
+    			<a href="/tag/tips/" title="tips"><b class="current-tag">tips</b></a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/sqlalchemy/" title="sqlalchemy">sqlalchemy</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/mongodb/" title="mongodb">mongodb</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/orm/" title="orm">orm</a>
+    		</li>
+    		<li class="tagRank9">
+    			<a href="/tag/code-fu/" title="code-fu">code-fu</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/data/" title="data">data</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/e/" title="e">e</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/i/" title="i">i</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/server/" title="server">server</a>
+    		</li>
+    		<li class="tagRank9">
+    			<a href="/tag/p/" title="p">p</a>
+    		</li>
+    		<li class="tagRank9">
+    			<a href="/tag/s/" title="s">s</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/algorithms/" title="algorithms">algorithms</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/t/" title="t">t</a>
+    		</li>
+    		<li class="tagRank9">
+    			<a href="/tag/databases/" title="databases">databases</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/validation/" title="validation">validation</a>
+    		</li>
+    	</ul>
+    </div>
 </div>
 
-                        </div>
+                        <div class="panel-footer"></div>
                     </div>                  
                 </div>
             </aside>
         </div>
 
+        <br>
+
         <footer>
             <div class="panel panel-default">
                 
 <div class="panel-body">
-	<p>&copy; Copyright 2013 Alex Istinspring</p>
-	<p><small><a class="no-pjax" href="/sitemap.xml">sitemap.xml</a></small></p>
+</div>
+<div class="panel-footer">
+    <p>&copy; Copyright 2013 Alex Istinspring <a class="no-pjax pull-right" href="/sitemap.xml">sitemap.xml</a></p>
 </div>
 
             </div>
@@ -279,7 +312,7 @@
     
 
     <script type="text/javascript">
-        $(document).pjax('a:not(.no-pjax)', '#main-container'); // Enable pjax for links
+        $(document).pjax('a:not(.no-pjax)', '#content-container'); // Enable pjax for links
         
         // activate meny sidebar
         var meny = Meny.create({

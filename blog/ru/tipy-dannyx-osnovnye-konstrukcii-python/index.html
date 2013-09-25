@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Типы данных, основные конструкции. Python.</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description=" content="типы данны и основные конструкции языка Python.">
+    <meta name="keywords" content="s, n, i, p, p, e, t, s, ,,  , t, i, p, s">
+    <meta name="author" content="Alex Istinspring">
+    
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.pjax/1.7.0/jquery.pjax.min.js"></script>
+    <script type="text/javascript" src="/static/js/meny.min.js"></script>
+    <script type="text/javascript" src="/static/js/application.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/normalize/2.1.0/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap-united.min.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/meny.css" />
+    <link rel="stylesheet" type="text/css" href="/pygments.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/layout.css" />
+</head>
+
+<body>
+    <div class="meny">
+        
+        <h3>Social Profiles</h3>
+        <ul>
+            <li><a href="http://github.com/istinspring">GitHub</a></li>
+            <li><a href="http://twitter.com/istinspring">Twitter</a></li>
+        </ul>
+        <h3>My Projects</h3>
+        <ul>
+            <li><a href="http://tamp3cords.com" title="Tamrecords (drum and bass record label)">Tamrecords</a></li>
+            <li><a href="http://dentaldaily.ru" title="Russian dental journal and meta search engine">Dental Daily</a></li>
+            <li><a href="http://grablab.com" title="Web scraping service">GrabLab</a></li>
+        </ul>
+    </div>
+
+    
+    <div class="container" id="main-container">
+        <nav class="navbar navbar-default" role="navigation">
+            
+<!--div class="navbar navbar-static-top"-->
+    <div class="navbar-header">
+	   <a class="navbar-brand" href="/"><b>Ninjaside</b></a>
+  	</div>
+
+    <ul class="nav navbar-nav">
+    
+        <li>
+            <a href="/page/experience/">
+                Experience
+            </a>
+        </li>
+    
+        <li>
+            <a href="/page/about/">
+                About
+            </a>
+        </li>
+    
+    </ul>
+
+	<ul class="nav navbar-nav navbar-right">
+		<li><a href="/wiki/"><b>Wiki</b></a></li>
+	</ul>
+<!--/div-->
+
+        </nav>
+
+        <div class="row" id="content-container">
+            
+            <article>
+                <div class="col col-lg-8">
+                    
+<div itemscope itemtype="http://schema.org/BlogPosting">
+    <div class="panel panel-default">
+
+<div class="panel-heading">
+    <h1 class="panel-title"><span itemprop="name">Типы данных, основные конструкции. Python.</span></h1>
+</div>
+
+<div class="panel-body">
+    <p class="text-right"><small><span itemprop="datePublished">2010-11-25 01:17</span></small></p>
+
+    <div itemprop="articleBody">
+    <p>Первая пачка ответов на вопросы из какого-то собеседования, линк к сожалению потерялся. В принципе вопросы довольно простые, если знать немножко про <em>функциональное программирование</em> и ориентироваться в <em>стандартных функциях</em>.</p>
+<h2>1. Как получить список всех атрибутов объекта?</h2>
+<p>Очень просто, используя <em>стандартную функцию dir</em>. В качестве аргумента
+передаем тот самый объект, в данном случае (для примера) объект string.</p>
+<div class="codehilite"><pre><span class="kn">import</span> <span class="nn">string</span>
+<span class="k">print</span> <span class="nb">dir</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+<span class="c"># Или так</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="k">print</span> <span class="p">[</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">thing</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span><span class="n">string</span><span class="p">)]</span>
+</pre></div>
+
+
+<p>Модуль <em>inspect</em> предоставляет несколько очень полезных методов которые позволяют собирать информацию о объектах Python, это достаточно важно, т.к. питон динамический ЯП и в нем очень просто сделать вещи которые обычно называют "хакерскими". Используя inspect можно получить содержимое класса, получить исходный код метода (ага, и поменять его), выделить формат и список аргументов функции и т.д.</p>
+<h2>2. Как получить список всех публичных атрибутов объекта?</h2>
+<p>Private методы в Python начинаются с "__" поэтому все что нужно
+сделать чтобы получить список public аттрибутов это отфильтровать все, что
+начинается с "__". Тут будет уместно использовать элемент функционального
+программирования - функцию <em>filter(f, lst)</em> которая формирует новый список
+элементов последовательности - lst руководствуясь функцией f.</p>
+<div class="codehilite"><pre><span class="kn">import</span> <span class="nn">sting</span>
+<span class="c"># так проще для понимания</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;__&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">False</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">True</span>
+<span class="k">print</span> <span class="nb">filter</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="p">[</span><span class="n">atr</span> <span class="k">for</span> <span class="n">atr</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">string</span><span class="p">)])</span>
+<span class="c"># а это то же самое в одну строчку</span>
+<span class="k">print</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="bp">False</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">cmp</span><span class="p">(</span><span class="n">x</span><span class="p">[:</span><span class="mi">2</span><span class="p">],</span> <span class="s">&quot;__&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="bp">True</span><span class="p">,</span> <span class="p">[</span><span class="n">atr</span> <span class="k">for</span> <span class="n">atr</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">string</span><span class="p">)])</span>
+</pre></div>
+
+
+<h2>3. Как получить список методов объекта?</h2>
+<p>Используя функцию callable() которая как бы говорит реально ли вызвать
+объект или нет. если вызвать реально - то это метод, если нет - то
+свойство</p>
+<div class="codehilite"><pre><span class="k">print</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="nb">callable</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">x</span><span class="p">)),</span> <span class="p">[</span><span class="n">atr</span> <span class="k">for</span> <span class="n">atr</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">string</span><span class="p">)])</span>
+</pre></div>
+
+
+<h2>4. В какой "магической" переменной хранится содержимое help?</h2>
+<p>В __doc__</p>
+<div class="codehilite"><pre><span class="k">print</span> <span class="n">string</span><span class="o">.</span><span class="n">__doc_</span>
+</pre></div>
+
+
+<h2>5. Есть два кортежа, получить третий как конкатенацию первых двух.</h2>
+<p>Элементарно.</p>
+<div class="codehilite"><pre><span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+</pre></div>
+
+
+<h2>6. Есть два кортежа, получить третий как объединение уникальных элементов первых двух кортежей.</h2>
+<p>Сначала преобразуем конкатенацию (операция склеивания объектов линейной
+структуры, обычно строк) в объект - множество (элементы которого
+уникальны, т.е. не могут повторятся, это свойство объекта) а затем
+преобразуем обратно в кортеж.</p>
+<div class="codehilite"><pre><span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+<span class="k">print</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">))</span>
+</pre></div>
+
+
+<h2>7. Почему если в цикле меняется список, то используется for x in lst[:], что означает [:]?</h2>
+<p>[:] означает, что берется копия списка и далее делается цикл по его
+элементам, таким образом получаем возможность работать с оригинальным
+списком, без опасений что изменения в нем повлияют на работу цикла.</p>
+<div class="codehilite"><pre><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+<span class="k">print</span> <span class="n">a</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">elem</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">a</span><span class="p">[:]):</span>
+    <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">elem</span> <span class="o">*</span> <span class="n">elem</span>
+<span class="k">print</span> <span class="n">a</span>
+</pre></div>
+
+
+<h2>8. Есть два списка одинаковой длины, в одном ключи, в другом значения. Составить словарь.</h2>
+<p>Преобразуем в пары (a,1) и т.д. c помощью zip и далее преобразование в тип данных - словарь с помощью функции dict()</p>
+<div class="codehilite"><pre><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span><span class="s">&#39;b&#39;</span><span class="p">,</span><span class="s">&#39;c&#39;</span><span class="p">]</span>
+<span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="k">print</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">))</span>
+</pre></div>
+
+
+<h2>9. Есть два списка разной длины, в одном ключи, в другом значения. Составить словарь. Для ключей, для которых нет значений использовать None в качестве значения. Значения, для которых нет ключей игнорировать.</h2>
+<p>Посидел, подумал, записал в одну строчку. Все просто, если понимать основы функционального программирования. Правда есть вероятность, что можно записать короче.</p>
+<div class="codehilite"><pre><span class="c"># можно так но тогда не выполняется 2ая часть условия. игнорирование значений для которых нет ключей.</span>
+<span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span><span class="s">&#39;b&#39;</span><span class="p">,</span><span class="s">&#39;c&#39;</span><span class="p">,</span><span class="s">&#39;d&#39;</span><span class="p">]</span>
+<span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="k">print</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+<span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span><span class="s">&#39;b&#39;</span><span class="p">,</span><span class="s">&#39;c&#39;</span><span class="p">]</span>
+<span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+<span class="c"># выполняет все требования задания.</span>
+<span class="k">print</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="bp">False</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">is</span> <span class="bp">False</span> <span class="k">else</span> <span class="bp">True</span><span class="p">,</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="p">:</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="k">else</span> <span class="bp">False</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)))</span>
+</pre></div>
+
+
+<h2>10. Есть словарь. Инвертировать его. Т.е. пары ключ: значение поменять местами — значение: ключ.</h2>
+<p>На помощь приходит метод items() который возвращает элементы словаря в
+виде кортежа (в виде пар) - (key, value)</p>
+<div class="codehilite"><pre><span class="n">a</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;a&#39;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;b&#39;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">&#39;c&#39;</span> <span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s">&#39;d&#39;</span> <span class="p">:</span> <span class="mi">4</span><span class="p">}</span>
+<span class="k">print</span> <span class="nb">dict</span><span class="p">([(</span><span class="n">y</span><span class="p">,</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="n">a</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span>
+</pre></div>
+
+
+<h2>11. Есть строка в юникоде, получить 8-битную строку в кодировке utf-8 и cp1251.</h2>
+<div class="codehilite"><pre><span class="nb">str</span> <span class="o">=</span> <span class="s">u&#39;unicode sting&#39;</span>
+<span class="k">print</span> <span class="nb">str</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="nb">str</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;cp1251&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+<h2>12. Есть строка в кодировке cp1251, получить юникод строку.</h2>
+<div class="codehilite"><pre><span class="nb">str</span> <span class="o">=</span> <span class="s">&#39;cp1251 string&#39;</span>
+<span class="k">print</span> <span class="nb">str</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&#39;cp1251&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+<h2>Итого</h2>
+<p>Чтобы более детально осознать о чем идет речь :</p>
+<ul>
+<li><a href="http://docs.python.org/library/inspect.htm">http://docs.python.org/library/inspect.htm</a></li>
+<li><a href="http://docs.python.org/reference/datamodel.html">http://docs.python.org/reference/datamodel.html</a></li>
+<li><a href="http://docs.python.org/tutorial/datastructures.html">http://docs.python.org/tutorial/datastructures.html</a></li>
+<li><a href="http://docs.python.org/library/stdtypes.html">http://docs.python.org/library/stdtypes.html</a></li>
+<li><a href="http://docs.python.org/library/functions.html">http://docs.python.org/library/functions.html</a></li>
+<li><a href="http://docs.python.org/howto/unicode.html">http://docs.python.org/howto/unicode.html</a></li>
+</ul>
+    </div>
+
+    <div class="comments-block" itemprop="comment">
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+            var disqus_shortname = 'ninjasideblog'; // required: replace example with your forum shortname
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </div>
+</div>
+
+    </div>
+</div>
+
+                </div>
+            </article>
+            
+            <aside>
+                <div class="col col-lg-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h2 class="panel-title">Sidebar</h2>
+                        </div>
+                        
+<div class="panel-body">
+    <div class="btn-group btn-group-justified">
+        
+        <a href="/blog/" class="btn btn-info">Blog (programming)</a>
+        <a href="/music/" class="btn btn-success">Music</a>
+        
+    </div>
+</div>
+<div class="panel-body">
+<ul class="nav nav-pills nav-stacked">
+    <li >
+        <a href="/category/cool-story-bro/">
+            cool-story-bro <span class="badge pull-right">1</span>
+        </a>
+    </li>
+    <li >
+        <a href="/category/linux/">
+            linux <span class="badge pull-right">2</span>
+        </a>
+    </li>
+    <li class="active">
+        <a href="/category/python/">
+            python <span class="badge pull-right">9</span>
+        </a>
+    </li>
+    <li >
+        <a href="/category/sampling/">
+            sampling <span class="badge pull-right">1</span>
+        </a>
+    </li>
+    <li >
+        <a href="/category/tech/">
+            tech <span class="badge pull-right">1</span>
+        </a>
+    </li>
+</ul>
+</div>
+<div class="panel-body">
+    <div class="tags">
+      	<ul class="list-unstyled">
+    		<li class="tagRank10">
+    			<a href="/tag/sqlite/" title="sqlite">sqlite</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/functional-programming/" title="functional-programming">functional-programming</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/glitch/" title="glitch">glitch</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/ddos/" title="ddos">ddos</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/yandex/" title="yandex">yandex</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/io/" title="io">io</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/linux/" title="linux">linux</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/n/" title="n"><b class="current-tag">n</b></a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/snippets/" title="snippets"><b class="current-tag">snippets</b></a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/%20/" title=" "><b class="current-tag"> </b></a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/how-to/" title="how-to">how-to</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/%2C/" title=","><b class="current-tag">,</b></a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/blog/" title="blog">blog</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/tech/" title="tech">tech</a>
+    		</li>
+    		<li class="tagRank9">
+    			<a href="/tag/tips/" title="tips"><b class="current-tag">tips</b></a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/sqlalchemy/" title="sqlalchemy">sqlalchemy</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/mongodb/" title="mongodb">mongodb</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/orm/" title="orm">orm</a>
+    		</li>
+    		<li class="tagRank9">
+    			<a href="/tag/code-fu/" title="code-fu">code-fu</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/data/" title="data">data</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/e/" title="e"><b class="current-tag">e</b></a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/i/" title="i"><b class="current-tag">i</b></a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/server/" title="server">server</a>
+    		</li>
+    		<li class="tagRank9">
+    			<a href="/tag/p/" title="p"><b class="current-tag">p</b></a>
+    		</li>
+    		<li class="tagRank9">
+    			<a href="/tag/s/" title="s"><b class="current-tag">s</b></a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/algorithms/" title="algorithms">algorithms</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/t/" title="t"><b class="current-tag">t</b></a>
+    		</li>
+    		<li class="tagRank9">
+    			<a href="/tag/databases/" title="databases">databases</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/validation/" title="validation">validation</a>
+    		</li>
+    	</ul>
+    </div>
+</div>
+
+                        <div class="panel-footer"></div>
+                    </div>                  
+                </div>
+            </aside>
+        </div>
+
+        <br>
+
+        <footer>
+            <div class="panel panel-default">
+                
+<div class="panel-body">
+</div>
+<div class="panel-footer">
+    <p>&copy; Copyright 2013 Alex Istinspring <a class="no-pjax pull-right" href="/sitemap.xml">sitemap.xml</a></p>
+</div>
+
+            </div>
+        </footer>
+    </div>
+    
+
+    <script type="text/javascript">
+        $(document).pjax('a:not(.no-pjax)', '#content-container'); // Enable pjax for links
+        
+        // activate meny sidebar
+        var meny = Meny.create({
+            menuElement: document.querySelector('.meny'),
+            contentsElement: document.querySelector('.container'),
+            position: 'left',
+            height: 200, // The height of the menu (when using top/bottom position)
+            width: 200, // The width of the menu (when using left/right position)
+            mouse: true, // Use mouse movement to automatically open/close
+            touch: true // Use touch swipe events to open/close
+        });
+    </script>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-10309863-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+</body>
+</html>

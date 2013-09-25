@@ -8,7 +8,7 @@
     <meta name="keywords" content="sqlalchemy, sqlite, databases">
     <meta name="author" content="Alex Istinspring">
     
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.pjax/1.7.0/jquery.pjax.min.js"></script>
     <script type="text/javascript" src="/static/js/meny.min.js"></script>
@@ -24,9 +24,16 @@
 <body>
     <div class="meny">
         
+        <h3>Social Profiles</h3>
         <ul>
             <li><a href="http://github.com/istinspring">GitHub</a></li>
             <li><a href="http://twitter.com/istinspring">Twitter</a></li>
+        </ul>
+        <h3>My Projects</h3>
+        <ul>
+            <li><a href="http://tamp3cords.com" title="Tamrecords (drum and bass record label)">Tamrecords</a></li>
+            <li><a href="http://dentaldaily.ru" title="Russian dental journal and meta search engine">Dental Daily</a></li>
+            <li><a href="http://grablab.com" title="Web scraping service">GrabLab</a></li>
         </ul>
     </div>
 
@@ -38,41 +45,46 @@
     <div class="navbar-header">
 	   <a class="navbar-brand" href="/"><b>Ninjaside</b></a>
   	</div>
+
     <ul class="nav navbar-nav">
     
-    	<li>
-    		<a href="/page/experience/">
-    			Experience
-    		</a>
-    	</li>
+        <li>
+            <a href="/page/experience/">
+                Experience
+            </a>
+        </li>
     
-    	<li>
-    		<a href="/page/about/">
-    			About
-    		</a>
-    	</li>
+        <li>
+            <a href="/page/about/">
+                About
+            </a>
+        </li>
     
-	</ul>
-	<ul class="nav navbar-nav pull-right">
+    </ul>
+
+	<ul class="nav navbar-nav navbar-right">
 		<li><a href="/wiki/"><b>Wiki</b></a></li>
 	</ul>
 <!--/div-->
 
         </nav>
 
-        <div class="row">
+        <div class="row" id="content-container">
             
             <article>
                 <div class="col col-lg-8">
-                    <div class="panel panel-default">
-                        
+                    
+<div itemscope itemtype="http://schema.org/BlogPosting">
+    <div class="panel panel-default">
+
 <div class="panel-heading">
-    <header><h2>Тюнинг скорости sqlite при работе через SQLAlchemy</h2></header>
+    <h1 class="panel-title"><span itemprop="name">Тюнинг скорости sqlite при работе через SQLAlchemy</span></h1>
 </div>
 
 <div class="panel-body">
-    <p class="text-right"><small>2013-07-30 02:33</small></p>
+    <p class="text-right"><small><span itemprop="datePublished">2013-07-30 02:33</span></small></p>
 
+    <div itemprop="articleBody">
     <p>Некоторые наверняка сталкивались с крайне низкой скоростью инсертов в sqlite с дефолтными настройками, хотя везде пишут, что БД должна работать очень быстро, тем не менее если использовать SQLAlchemy с драйвером pysqlite "из коробки", при большом кол-ве элементов и внушительном объеме данных на каждом инсерте, скорость становится просто невыносимой. Есть возможность тюнить различные параметры через директиву PRAGMA, но типичное применение sqlite (у меня по крайней мере) - это временное хранилище данных, что подразумевает переодическое удаление, после чего при запуске скрипта SQLAlchemy создает новую БД уже без всякого тюнинга. В конце концов я разрбрался и нашел элегантное решение.</p>
 <p>Я использую (последнее время редко) SQLAlchemy с микрофрэймворком Flask (почти всегда, но уже с MongoDB), поэтому приведу пример config.py файла "живого" проекта, в данном случае это парсер данных с твиттера.</p>
 <div class="codehilite"><pre><span class="kn">import</span> <span class="nn">os</span>
@@ -143,13 +155,14 @@
 </pre></div>
 
 
-<p>В данном случае включается поддержка foreign_keys, отключается проверка записи данных (synchronous) т.е. драйвер slqite передает задачу операционной системе и не проверяет правильность записи, тем самым экономя кучу времени, но в случае сбоя питания база скорее всего будет повреждена, а данные потеряны (подробнее по ссылке http://www.sqlite.org/pragma.html#pragma_synchronous ) и journal_mode - журнал переносится в память.
+<p>В данном случае включается поддержка foreign_keys, отключается проверка записи данных (synchronous) т.е. драйвер slqite передает задачу операционной системе и не проверяет правильность записи, тем самым экономя кучу времени, но в случае сбоя питания база скорее всего будет повреждена, а данные потеряны (подробнее по ссылке <a href="http://www.sqlite.org/pragma.html#pragma_synchronous">http://www.sqlite.org/pragma.html#pragma_synchronous</a> ) и journal_mode - журнал переносится в память.
 <strong>Т.е. фактически мы жертвуем целостностью данных (что нужно не всегда) и получаем выйграш в скорости.</strong></p>
 <p>Само собой существует множество вариантов более тонкой настройки, можно поиграться с такими параметрами как locking_mode, cache_size, page_size и т.д.</p>
 <p>Полный список директив PRAGMA можно найти в документации <a href="http://www.sqlite.org/pragma.html">http://www.sqlite.org/pragma.html</a> так же есть серия статей на хабре <a href="http://habrahabr.ru/post/149356/">http://habrahabr.ru/post/149356/</a></p>
 <p>На данный момент крайне редко использую sqlite, а если вдруг понадобится какое-то решение <a href="http://en.wikipedia.org/wiki/Embedded_database">embedded database</a> то скорее всего буду смотреть в сторону <a href="http://labs.codernity.com/codernitydb/">http://labs.codernity.com/codernitydb/</a></p>
+    </div>
 
-    <div class="comments-block">
+    <div class="comments-block" itemprop="comment">
         <div id="disqus_thread"></div>
         <script type="text/javascript">
             /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
@@ -167,8 +180,9 @@
     </div>
 </div>
 
-                        <div class="panel-footer"></div>
-                    </div>
+    </div>
+</div>
+
                 </div>
             </article>
             
@@ -176,136 +190,155 @@
                 <div class="col col-lg-4">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h2>Sidebar</h2>
+                            <h2 class="panel-title">Sidebar</h2>
                         </div>
-                        <div class="panel-body">
-                            
+                        
+<div class="panel-body">
+    <div class="btn-group btn-group-justified">
+        
+        <a href="/blog/" class="btn btn-info">Blog (programming)</a>
+        <a href="/music/" class="btn btn-success">Music</a>
+        
+    </div>
+</div>
+<div class="panel-body">
 <ul class="nav nav-pills nav-stacked">
-	
-		
-		<li >
-			<a href="/category/cool-story-bro/">
-				cool-story-bro
-			</a>
-		</li>
-		
-	
-		
-		<li >
-			<a href="/category/linux/">
-				linux
-			</a>
-		</li>
-		
-	
-		
-		<li class="active">
-			<a href="/category/python/">
-				python
-			</a>
-		</li>
-		
-	
-		
-		<li >
-			<a href="/category/tech/">
-				tech
-			</a>
-		</li>
-		
-	
- </ul>
-<hr>
-<div class="tags">
-  	<ul class="list-unstyled">
-	
-		<li class="tagRank10">
-			<a href="/tag/sqlite/" title="sqlite"><b class="current-tag">sqlite</b></a>
-		</li>
-	
-		<li class="tagRank9">
-			<a href="/tag/sqlalchemy/" title="sqlalchemy"><b class="current-tag">sqlalchemy</b></a>
-		</li>
-	
-		<li class="tagRank10">
-			<a href="/tag/mongodb/" title="mongodb">mongodb</a>
-		</li>
-	
-		<li class="tagRank10">
-			<a href="/tag/functional-programming/" title="functional-programming">functional-programming</a>
-		</li>
-	
-		<li class="tagRank10">
-			<a href="/tag/linux/" title="linux">linux</a>
-		</li>
-	
-		<li class="tagRank10">
-			<a href="/tag/server/" title="server">server</a>
-		</li>
-	
-		<li class="tagRank10">
-			<a href="/tag/blog/" title="blog">blog</a>
-		</li>
-	
-		<li class="tagRank10">
-			<a href="/tag/ddos/" title="ddos">ddos</a>
-		</li>
-	
-		<li class="tagRank10">
-			<a href="/tag/orm/" title="orm">orm</a>
-		</li>
-	
-		<li class="tagRank10">
-			<a href="/tag/algorithms/" title="algorithms">algorithms</a>
-		</li>
-	
-		<li class="tagRank10">
-			<a href="/tag/yandex/" title="yandex">yandex</a>
-		</li>
-	
-		<li class="tagRank9">
-			<a href="/tag/databases/" title="databases"><b class="current-tag">databases</b></a>
-		</li>
-	
-		<li class="tagRank9">
-			<a href="/tag/code-fu/" title="code-fu">code-fu</a>
-		</li>
-	
-		<li class="tagRank10">
-			<a href="/tag/tech/" title="tech">tech</a>
-		</li>
-	
-		<li class="tagRank9">
-			<a href="/tag/tips/" title="tips">tips</a>
-		</li>
-	
-		<li class="tagRank10">
-			<a href="/tag/validation/" title="validation">validation</a>
-		</li>
-	
-		<li class="tagRank10">
-			<a href="/tag/data/" title="data">data</a>
-		</li>
-	
-		<li class="tagRank10">
-			<a href="/tag/snippets/" title="snippets">snippets</a>
-		</li>
-	
-	</ul>
+    <li >
+        <a href="/category/cool-story-bro/">
+            cool-story-bro <span class="badge pull-right">1</span>
+        </a>
+    </li>
+    <li >
+        <a href="/category/linux/">
+            linux <span class="badge pull-right">2</span>
+        </a>
+    </li>
+    <li class="active">
+        <a href="/category/python/">
+            python <span class="badge pull-right">9</span>
+        </a>
+    </li>
+    <li >
+        <a href="/category/sampling/">
+            sampling <span class="badge pull-right">1</span>
+        </a>
+    </li>
+    <li >
+        <a href="/category/tech/">
+            tech <span class="badge pull-right">1</span>
+        </a>
+    </li>
+</ul>
+</div>
+<div class="panel-body">
+    <div class="tags">
+      	<ul class="list-unstyled">
+    		<li class="tagRank10">
+    			<a href="/tag/sqlite/" title="sqlite"><b class="current-tag">sqlite</b></a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/functional-programming/" title="functional-programming">functional-programming</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/glitch/" title="glitch">glitch</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/ddos/" title="ddos">ddos</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/yandex/" title="yandex">yandex</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/io/" title="io">io</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/linux/" title="linux">linux</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/n/" title="n">n</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/snippets/" title="snippets">snippets</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/%20/" title=" "> </a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/how-to/" title="how-to">how-to</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/%2C/" title=",">,</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/blog/" title="blog">blog</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/tech/" title="tech">tech</a>
+    		</li>
+    		<li class="tagRank9">
+    			<a href="/tag/tips/" title="tips">tips</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/sqlalchemy/" title="sqlalchemy"><b class="current-tag">sqlalchemy</b></a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/mongodb/" title="mongodb">mongodb</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/orm/" title="orm">orm</a>
+    		</li>
+    		<li class="tagRank9">
+    			<a href="/tag/code-fu/" title="code-fu">code-fu</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/data/" title="data">data</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/e/" title="e">e</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/i/" title="i">i</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/server/" title="server">server</a>
+    		</li>
+    		<li class="tagRank9">
+    			<a href="/tag/p/" title="p">p</a>
+    		</li>
+    		<li class="tagRank9">
+    			<a href="/tag/s/" title="s">s</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/algorithms/" title="algorithms">algorithms</a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/t/" title="t">t</a>
+    		</li>
+    		<li class="tagRank9">
+    			<a href="/tag/databases/" title="databases"><b class="current-tag">databases</b></a>
+    		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/validation/" title="validation">validation</a>
+    		</li>
+    	</ul>
+    </div>
 </div>
 
-                        </div>
+                        <div class="panel-footer"></div>
                     </div>                  
                 </div>
             </aside>
         </div>
 
+        <br>
+
         <footer>
             <div class="panel panel-default">
                 
 <div class="panel-body">
-	<p>&copy; Copyright 2013 Alex Istinspring</p>
-	<p><small><a class="no-pjax" href="/sitemap.xml">sitemap.xml</a></small></p>
+</div>
+<div class="panel-footer">
+    <p>&copy; Copyright 2013 Alex Istinspring <a class="no-pjax pull-right" href="/sitemap.xml">sitemap.xml</a></p>
 </div>
 
             </div>
@@ -314,7 +347,7 @@
     
 
     <script type="text/javascript">
-        $(document).pjax('a:not(.no-pjax)', '#main-container'); // Enable pjax for links
+        $(document).pjax('a:not(.no-pjax)', '#content-container'); // Enable pjax for links
         
         // activate meny sidebar
         var meny = Meny.create({

@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
+        <loc>http://ninjaside.info/wiki/interesting-open-source/</loc>
+        <lastmod>2013-10-25</lastmod>
+    </url>
+    <url>
+        <loc>http://ninjaside.info/wiki/music/</loc>
+        <lastmod>2013-10-26</lastmod>
+    </url>
+    <url>
+        <loc>http://ninjaside.info/wiki/index/</loc>
+        <lastmod>2013-06-10</lastmod>
+    </url>
+    <url>
         <loc>http://ninjaside.info/page/experience/</loc>
         <lastmod>2013-05-15</lastmod>
     </url>
@@ -29,6 +41,10 @@
         <lastmod>2012-03-10</lastmod>
     </url>
     <url>
+        <loc>http://ninjaside.info/blog/ru/kak-razbit-bolshoy-fail-na-fragmenty/</loc>
+        <lastmod>2012-03-02</lastmod>
+    </url>
+    <url>
         <loc>http://ninjaside.info/blog/ru/orm-ispolzovanie-sqlalchemy/</loc>
         <lastmod>2011-05-31</lastmod>
     </url>
@@ -37,8 +53,16 @@
         <lastmod>2011-05-08</lastmod>
     </url>
     <url>
+        <loc>http://ninjaside.info/blog/ru/tipy-dannyx-osnovnye-konstrukcii-python/</loc>
+        <lastmod>2010-11-25</lastmod>
+    </url>
+    <url>
         <loc>http://ninjaside.info/blog/ru/funkcii-map-i-zip-i-lambda-python/</loc>
         <lastmod>2010-11-17</lastmod>
+    </url>
+    <url>
+        <loc>http://ninjaside.info/blog/ru/poluchit-sluchainuiy-posledovatelnost/</loc>
+        <lastmod>2010-11-13</lastmod>
     </url>
     <url>
         <loc>http://ninjaside.info/blog/ru/xranenie-nastroek-python/</loc>
@@ -47,5 +71,9 @@
     <url>
         <loc>http://ninjaside.info/blog/ru/100gigabit-ddos/</loc>
         <lastmod>2010-10-26</lastmod>
+    </url>
+    <url>
+        <loc>http://ninjaside.info/music/ru/kak-sdelat-glitchi/</loc>
+        <lastmod>2013-10-25</lastmod>
     </url>
 </urlset>

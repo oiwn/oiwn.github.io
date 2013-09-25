@@ -12,13 +12,24 @@ body {
 	overflow-x: hidden;
 }
 
+.panel-body {
+    padding: 5px 15px;
+}
+
+h1 { font-size: 22px; }
+h2 { font-size: 20px; }
+
+h2 {
+    margin-top: 5px;
+}
+
 hr {
     margin-top: 5px;
     margin-bottom: 5px;
 }
 
 .first-article {
-    font-size: 20px;
+    font-size: 18px;
 }
 
 

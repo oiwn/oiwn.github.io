@@ -17,11 +17,6 @@ a {
 		color: #f76f76;
 	}
 
-h1,
-h2 {
-	font-size: 24px;
-}
-
 .meny {
 	display: none;
 	padding: 20px 5px;
@@ -36,7 +31,7 @@ h2 {
 
 .meny ul {
 	margin-top: 10px;
-	margin-left: 5px;
+	margin-left: 10px;
 }
 
 .meny ul li {
