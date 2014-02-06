@@ -9,7 +9,7 @@
     <meta name="author" content="Alex Istinspring">
     
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.pjax/1.7.0/jquery.pjax.min.js"></script>
     <script type="text/javascript" src="/static/js/meny.min.js"></script>
     <script type="text/javascript" src="/static/js/application.js"></script>
@@ -41,36 +41,37 @@
     <div class="container" id="main-container">
         <nav class="navbar navbar-default" role="navigation">
             
-<!--div class="navbar navbar-static-top"-->
     <div class="navbar-header">
 	   <a class="navbar-brand" href="/"><b>Ninjaside</b></a>
   	</div>
 
-    <ul class="nav navbar-nav">
-    
-        <li>
-            <a href="/page/experience/">
-                Experience
-            </a>
-        </li>
-    
-        <li>
-            <a href="/page/about/">
-                About
-            </a>
-        </li>
-    
-    </ul>
+    <div class="navbar-collapse collapse" id="navbar-main">
+        <ul class="nav navbar-nav">
+        
+            <li>
+                <a href="/page/experience/">
+                    Experience
+                </a>
+            </li>
+        
+            <li>
+                <a href="/page/about/">
+                    About
+                </a>
+            </li>
+        
+        </ul>
 
-	<ul class="nav navbar-nav navbar-right">
-		<li><a href="/wiki/"><b>Wiki</b></a></li>
-	</ul>
-<!--/div-->
+    	<ul class="nav navbar-nav navbar-right">
+    		<li><a href="/wiki/"><b>Wiki</b></a></li>
+            <li><a href="/feed.atom" class="no-pjax"><b>RSS</b></a></li>
+    	</ul>
+    </div>
 
         </nav>
 
         <div class="row" id="content-container">
-            
+
             <article>
                 <div class="col col-lg-8">
                     
@@ -132,7 +133,7 @@ SCP (от англ. secure copy) — протокол RCP копирования
 
                 </div>
             </article>
-            
+
             <aside>
                 <div class="col col-lg-4">
                     <div class="panel panel-default">
@@ -162,7 +163,7 @@ SCP (от англ. secure copy) — протокол RCP копирования
     </li>
     <li >
         <a href="/category/python/">
-            python <span class="badge pull-right">10</span>
+            python <span class="badge pull-right">11</span>
         </a>
     </li>
     <li >
@@ -201,6 +202,9 @@ SCP (от англ. secure copy) — протокол RCP копирования
     		<li class="tagRank10">
     			<a href="/tag/linux/" title="linux"><b class="current-tag">linux</b></a>
     		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/server/" title="server"><b class="current-tag">server</b></a>
+    		</li>
     		<li class="tagRank9">
     			<a href="/tag/snippets/" title="snippets">snippets</a>
     		</li>
@@ -238,7 +242,7 @@ SCP (от англ. secure copy) — протокол RCP копирования
     			<a href="/tag/data/" title="data">data</a>
     		</li>
     		<li class="tagRank10">
-    			<a href="/tag/server/" title="server"><b class="current-tag">server</b></a>
+    			<a href="/tag/django/" title="django">django</a>
     		</li>
     		<li class="tagRank10">
     			<a href="/tag/algorithms/" title="algorithms">algorithms</a>
@@ -254,7 +258,7 @@ SCP (от англ. secure copy) — протокол RCP копирования
 </div>
 
                         <div class="panel-footer"></div>
-                    </div>                  
+                    </div>
                 </div>
             </aside>
         </div>
@@ -277,7 +281,7 @@ SCP (от англ. secure copy) — протокол RCP копирования
 
     <script type="text/javascript">
         $(document).pjax('a:not(.no-pjax)', '#content-container'); // Enable pjax for links
-        
+
         // activate meny sidebar
         var meny = Meny.create({
             menuElement: document.querySelector('.meny'),

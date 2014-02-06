@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <title>100 Гигабит ДДос</title>
+    <title>Django Framework - как сохранять изображения</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description=" content="Скажите, Вы когда-нибудь сталкивались со 100 гигабитной атакой на подсеть?">
-    <meta name="keywords" content="ddos, yandex">
+    <meta name="description=" content="сохранение большого кол-ва изображений используя Django ORM">
+    <meta name="keywords" content="django, framework, tips">
     <meta name="author" content="Alex Istinspring">
     
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -79,80 +79,59 @@
     <div class="panel panel-default">
 
 <div class="panel-heading">
-    <h1 class="panel-title"><span itemprop="name">100 Гигабит ДДос</span></h1>
+    <h1 class="panel-title"><span itemprop="name">Django Framework - как сохранять изображения</span></h1>
 </div>
 
 <div class="panel-body">
-    <p class="text-right"><small><span itemprop="datePublished">2010-10-26 05:31</span></small></p>
+    <p class="text-right"><small><span itemprop="datePublished">2014-02-07 3:26</span></small></p>
 
     <div itemprop="articleBody">
-    <p>На хабре раньше лежала. Зачем было удалять, непонятно. Но гугл услужливо сохранил копию в кэше.</p>
-<h2>100+ Гбит/с DDoS</h2>
-<p>Скажите, Вы когда-нибудь сталкивались со 100 гигабитной атакой на подсеть?
-Когда-нибудь кто-нибудь видел как лежит yandex? rtcomm? ukrtel? darpa? evoswitch? webazilla?
-Сеть в мир небольшой европейской страны? И не дай-бог Вам увидеть подобное.
-Если кто-то думал, есть ли термоядерное оружие в интернет — оно есть.</p>
-<h2>Затишье перед бурей - 25 сентября 2010 г.</h2>
-<p><strong>18:25</strong><br />
-    На один IP адрес в нашей сети начинается атака, стандартный UDP flood
-    случайными пакетами. Просим дц закрыть UDP траффик на IP, никто больше
-    10 гбит/с не атакуют верно?<br />
-<strong>18:35</strong><br />
-    Дц рапортует о блокировки с красивым графиком падения нагрузки на порт.<br />
-<strong>18:40</strong> <br />
-    Предпоследний вопрос получил ответ — неверно! На IP дали 40 гбит/с UDP
-    flood на всю подсеть (512 IP /23). Провайдер null рутнул всю подсеть.
-    Подсеть не с нашей AS. Сделать ничего невозможно.  </p>
-<h2>27 сентября 2010 г.</h2>
-<p><strong>17:30</strong><br />
-    После объяснительной нашу сеть включают, естественно атакованного
-    попросили уйти, сменить А запись и забыть про наш хостинг еще 25-ого,
-    пару дц положил он гуляя (кажется netdirekt и какой-то украинский).  </p>
-<h2>Doomsday - 7 октября 2010 г.</h2>
-<p><strong>10:30</strong><br />
-    На клиента-хостера, а точнее его клиента (code-named товарищ) в
-    небольшой подсети дали атаку в 10 гбит/с, т.к. мы на «испытательном
-    сроке», с PA подсетями туго, решили блокировать IP, попросили
-    нуллрутнуть. Не тут-то было, старый друг вернулся. Венгерские каналы за
-    рубеж для многих сайтов закрылись, обратно тоже самое. Атака в 100
-    гбит/с положила международные каналы проверки EU VAT, банковские каналы,
-    основной канал фондовой биржи, ADSL сети и несколько ДЦ. Для локальных
-    пользователей пол-Европы не было видно. Нас рутят в ноль.<br />
-<strong>13:44</strong><br />
-    По данным дц, спустя 1 час после дропа IP атака продолжалась на другие
-    подсети их AS. По данным от клиента они попытались перенести сайт на
-    Leaseweb, IP сменили. Evoswitch частично лег моментально, пока не
-    зануллраутили IP. При смене A записи у домена атака начиналась
-    моментально в 10 гбит/с постепенно увеличиваясь.<br />
-<strong>18:17</strong><br />
-    Товарищ сделал 127.0.0.1 у домена.  </p>
-<h2>Утро вечера не мудренее - 8 октября 2010 г.</h2>
-<p><strong>10:30</strong><br />
-    Клиент сообщает, что после переноса сайта товарища в дц webazilla на
-    него опять полилось 60 гбит/с<br />
-<strong>11:57</strong><br />
-    Вебазилла умоляет убрать из домена A запись, т.к. магистральщики
-    умирать начинают — льется больше 100 гбит/с.  </p>
-<h2>Весело да?</h2>
-<p>После этого товарищ попрыгал по антиддосерам (укртелеком и еще какие-то вроде sharktech и еще кто-то), 
-сайты которых быстро валились и подсети тоже.<br />
-Напомню смена A записи моментальна давала атаку, а нулрут — атаку на под-сеть, мулти-запись А — мулти-атаку!
-Тут увидел что яндекс не открывается, как оказалось все довольно просто: когда товарищ уже видимо от безысходности и глупости вписывал IP адреса darpa.mil, yandex.ru, голдентелекома, google и еще кого-то, 
-атака продолжалась на эти IP, никто не продержался.<br />
-Представьте у Вас шланг — в виде A записи, с возможностью направить куда угодно и уничтожить почти, 
-что угодно. Попросил клиента уговорить товарища (т.к. не смыслил он, что творил, или смыслил?) 
-прекратить делать окружающим также плохо как и ему и прописать 0.0.0.0 или 127.0.0.1.  </p>
-<h2>Чудо случилось к 21:00 — darpa.mil поднялась, а ддос магически исчез</h2>
-<p>Встает вопрос: как бороться с этим, без nullрута подсетей? 36 часов атаки, кто на такое вообще способен? И сколько такое вообще может стоить?  </p>
-<p>P.S.: Мои подсети до сих пор не включили, магистральщики боятся и просят
-ждать 72 часа. Дц боится вообще прикасаться к ним, оно и ясно, у них SLA
-99.9% дважды нарушено, выходит они и нам должны и остальным клиентам,
-проще им с нами судиться, чем если что, с тысячами их клиентов.  </p>
-<p>Пара ссылок по теме:  </p>
-<ul>
-<li><a href="http://lenta.ru/news/2010/10/08/ddos/">http://lenta.ru/news/2010/10/08/ddos/</a>  </li>
-<li><a href="http://lenta.ru/news/2010/10/08/yandex/">http://lenta.ru/news/2010/10/08/yandex/</a>  </li>
-</ul>
+    <p>Крайне не рекомендую использовать Django ORM для этого, но все же...</p>
+<p>Допустим есть большое кол-во картинок которые заливаются в базу данных используя Django ORM, например во время парсинг. Тут же возникает проблема - крайне нежелательно хранить множество файлов в одной папке, ибо тормоза при доступе становятся довольно заметны. Один из вариантов решения - раскидывать картинки в разные папки, к сожалению штатные средства джанги не позволяют решить эту задачу должным образом, в случае, если картинки заливаются в один момент и процесс не растягивается на дни. Однако фрэймворк предоставляет возможности сделать это самостоятельно.</p>
+<p>Я использую следующий вариант решения: имя файла картинки это хэш (sha1) который вычисляется от url картинки, от этого хэша откусываются 2 первых и 2 последующих символа, которые будут являться названием директорий.</p>
+<p>Например, если хэш был </p>
+<div class="codehilite"><pre>537a1d5139ea13ecd3f1558d513bed2fdbc38478
+</pre></div>
+
+
+<p>то картинка будет сохраняться сюда </p>
+<div class="codehilite"><pre>/53/7a/537a1d5139ea13ecd3f1558d513bed2fdbc38478.jpg
+</pre></div>
+
+
+<p>Т.е. таким образом файлы "размазываются" по файловой системе в разные папки, увеличивая скорость доступа.</p>
+<p>Реализация для Django (код из живого проекта), используем тот факт, что в качесте upload_to может выступ не только строка но и функция которая эту строку будет генерировать:</p>
+<div class="codehilite"><pre><span class="k">def</span> <span class="nf">get_clinic_image_path</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+    <span class="n">hashname</span> <span class="o">=</span> <span class="n">sha1</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span> <span class="o">+</span> <span class="s">&#39;.jpg&#39;</span>
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">&#39;clinic&#39;</span><span class="p">,</span> <span class="n">hashname</span><span class="p">[:</span><span class="mi">2</span><span class="p">],</span> <span class="n">hashname</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">],</span>
+                        <span class="n">hashname</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Clinic</span><span class="p">(</span><span class="n">SeoMixin</span><span class="p">):</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">,</span> <span class="n">db_index</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="n">teaser</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">RichTextField</span><span class="p">(</span><span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="c"># сохраняем картинку</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ImageField</span><span class="p">(</span><span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">upload_to</span><span class="o">=</span><span class="n">get_clinic_image_path</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Еще один вариант, это наследовать CustomImageField от ImageField и там описать свою логику, тоже имеет право на жизнь, но займет гораздо больше времени на реализацию. Подробнее - в документации Django по <a href="https://docs.djangoproject.com/en/dev/howto/custom-model-fields/">Custom model fields</a></p>
+<h1>Произвольное количество изображений</h1>
+<p>Если каждомй отдельной записи в БД может соответствовать произвольное кол-во картинок, то придется создвать отдельную таблицу с линком (реляцией).</p>
+<div class="codehilite"><pre><span class="k">class</span> <span class="nc">Images</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">alt</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">src</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ImageField</span><span class="p">(</span><span class="n">upload_to</span><span class="o">=</span><span class="n">get_item_image_path</span><span class="p">)</span>
+    <span class="c"># и собственно линк на Item</span>
+    <span class="n">item</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s">&#39;Item&#39;</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s">&#39;images&#39;</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Item</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">db_index</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Не слишком сложно.</p>
     </div>
 
     <div class="comments-block" itemprop="comment">
@@ -196,7 +175,7 @@
 </div>
 <div class="panel-body">
 <ul class="nav nav-pills nav-stacked">
-    <li class="active">
+    <li >
         <a href="/category/cool-story-bro/">
             cool-story-bro <span class="badge pull-right">1</span>
         </a>
@@ -206,7 +185,7 @@
             linux <span class="badge pull-right">2</span>
         </a>
     </li>
-    <li >
+    <li class="active">
         <a href="/category/python/">
             python <span class="badge pull-right">11</span>
         </a>
@@ -236,10 +215,10 @@
     			<a href="/tag/glitch/" title="glitch">glitch</a>
     		</li>
     		<li class="tagRank10">
-    			<a href="/tag/ddos/" title="ddos"><b class="current-tag">ddos</b></a>
+    			<a href="/tag/ddos/" title="ddos">ddos</a>
     		</li>
     		<li class="tagRank10">
-    			<a href="/tag/yandex/" title="yandex"><b class="current-tag">yandex</b></a>
+    			<a href="/tag/yandex/" title="yandex">yandex</a>
     		</li>
     		<li class="tagRank10">
     			<a href="/tag/io/" title="io">io</a>
@@ -266,7 +245,7 @@
     			<a href="/tag/tech/" title="tech">tech</a>
     		</li>
     		<li class="tagRank7">
-    			<a href="/tag/tips/" title="tips">tips</a>
+    			<a href="/tag/tips/" title="tips"><b class="current-tag">tips</b></a>
     		</li>
     		<li class="tagRank10">
     			<a href="/tag/sqlalchemy/" title="sqlalchemy">sqlalchemy</a>
@@ -275,7 +254,7 @@
     			<a href="/tag/mongodb/" title="mongodb">mongodb</a>
     		</li>
     		<li class="tagRank10">
-    			<a href="/tag/framework/" title="framework">framework</a>
+    			<a href="/tag/framework/" title="framework"><b class="current-tag">framework</b></a>
     		</li>
     		<li class="tagRank10">
     			<a href="/tag/orm/" title="orm">orm</a>
@@ -287,7 +266,7 @@
     			<a href="/tag/data/" title="data">data</a>
     		</li>
     		<li class="tagRank10">
-    			<a href="/tag/django/" title="django">django</a>
+    			<a href="/tag/django/" title="django"><b class="current-tag">django</b></a>
     		</li>
     		<li class="tagRank10">
     			<a href="/tag/algorithms/" title="algorithms">algorithms</a>

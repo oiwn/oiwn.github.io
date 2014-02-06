@@ -9,7 +9,7 @@
     <meta name="author" content="Alex Istinspring">
     
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.pjax/1.7.0/jquery.pjax.min.js"></script>
     <script type="text/javascript" src="/static/js/meny.min.js"></script>
     <script type="text/javascript" src="/static/js/application.js"></script>
@@ -41,36 +41,37 @@
     <div class="container" id="main-container">
         <nav class="navbar navbar-default" role="navigation">
             
-<!--div class="navbar navbar-static-top"-->
     <div class="navbar-header">
 	   <a class="navbar-brand" href="/"><b>Ninjaside</b></a>
   	</div>
 
-    <ul class="nav navbar-nav">
-    
-        <li>
-            <a href="/page/experience/">
-                Experience
-            </a>
-        </li>
-    
-        <li>
-            <a href="/page/about/">
-                About
-            </a>
-        </li>
-    
-    </ul>
+    <div class="navbar-collapse collapse" id="navbar-main">
+        <ul class="nav navbar-nav">
+        
+            <li>
+                <a href="/page/experience/">
+                    Experience
+                </a>
+            </li>
+        
+            <li>
+                <a href="/page/about/">
+                    About
+                </a>
+            </li>
+        
+        </ul>
 
-	<ul class="nav navbar-nav navbar-right">
-		<li><a href="/wiki/"><b>Wiki</b></a></li>
-	</ul>
-<!--/div-->
+    	<ul class="nav navbar-nav navbar-right">
+    		<li><a href="/wiki/"><b>Wiki</b></a></li>
+            <li><a href="/feed.atom" class="no-pjax"><b>RSS</b></a></li>
+    	</ul>
+    </div>
 
         </nav>
 
         <div class="row" id="content-container">
-            
+
             <article>
                 <div class="col col-lg-8">
                     
@@ -239,7 +240,7 @@
 
                 </div>
             </article>
-            
+
             <aside>
                 <div class="col col-lg-4">
                     <div class="panel panel-default">
@@ -269,7 +270,7 @@
     </li>
     <li class="active">
         <a href="/category/python/">
-            python <span class="badge pull-right">10</span>
+            python <span class="badge pull-right">11</span>
         </a>
     </li>
     <li >
@@ -308,6 +309,9 @@
     		<li class="tagRank10">
     			<a href="/tag/linux/" title="linux">linux</a>
     		</li>
+    		<li class="tagRank10">
+    			<a href="/tag/server/" title="server">server</a>
+    		</li>
     		<li class="tagRank9">
     			<a href="/tag/snippets/" title="snippets"><b class="current-tag">snippets</b></a>
     		</li>
@@ -345,7 +349,7 @@
     			<a href="/tag/data/" title="data">data</a>
     		</li>
     		<li class="tagRank10">
-    			<a href="/tag/server/" title="server">server</a>
+    			<a href="/tag/django/" title="django">django</a>
     		</li>
     		<li class="tagRank10">
     			<a href="/tag/algorithms/" title="algorithms">algorithms</a>
@@ -361,7 +365,7 @@
 </div>
 
                         <div class="panel-footer"></div>
-                    </div>                  
+                    </div>
                 </div>
             </aside>
         </div>
@@ -384,7 +388,7 @@
 
     <script type="text/javascript">
         $(document).pjax('a:not(.no-pjax)', '#content-container'); // Enable pjax for links
-        
+
         // activate meny sidebar
         var meny = Meny.create({
             menuElement: document.querySelector('.meny'),
