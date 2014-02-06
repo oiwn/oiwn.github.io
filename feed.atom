@@ -11,122 +11,122 @@
   <generator>Werkzeug</generator>
   <entry xml:base="http://localhost/feed.atom">
     <title type="text">Django Framework - как сохранять изображения</title>
-    <id>http://localhost/blog/ru/django-kak-sohranyat-kartinki/</id>
+    <id>http://ninjaside.info/blog/ru/django-kak-sohranyat-kartinki/</id>
     <updated>2014-02-07T03:26:00Z</updated>
     <published>2014-02-07T03:26:00Z</published>
-    <link href="http://localhost/blog/ru/django-kak-sohranyat-kartinki/" />
+    <link href="http://ninjaside.info/blog/ru/django-kak-sohranyat-kartinki/" />
     <content type="html">сохранение большого кол-ва изображений используя Django ORM</content>
   </entry>
   <entry xml:base="http://localhost/feed.atom">
     <title type="text">Flask framework - использование url converters</title>
-    <id>http://localhost/blog/ru/flask-url-converters/</id>
+    <id>http://ninjaside.info/blog/ru/flask-url-converters/</id>
     <updated>2013-10-08T04:02:00Z</updated>
     <published>2013-10-08T04:02:00Z</published>
-    <link href="http://localhost/blog/ru/flask-url-converters/" />
+    <link href="http://ninjaside.info/blog/ru/flask-url-converters/" />
     <content type="html">использование url converters для исправления ошибок роутинга Flask Framework</content>
   </entry>
   <entry xml:base="http://localhost/feed.atom">
     <title type="text">Использование Schematics для валидации данных</title>
-    <id>http://localhost/blog/ru/schematics-dlya-validacii-dannih/</id>
+    <id>http://ninjaside.info/blog/ru/schematics-dlya-validacii-dannih/</id>
     <updated>2013-08-02T21:23:00Z</updated>
     <published>2013-08-02T21:23:00Z</published>
-    <link href="http://localhost/blog/ru/schematics-dlya-validacii-dannih/" />
+    <link href="http://ninjaside.info/blog/ru/schematics-dlya-validacii-dannih/" />
     <content type="html">использование библиотеки Schematics для валидации данных (Python)</content>
   </entry>
   <entry xml:base="http://localhost/feed.atom">
     <title type="text">Тюнинг скорости sqlite при работе через SQLAlchemy</title>
-    <id>http://localhost/blog/ru/tuning-skorosti-sqlite-v-sqlalchemy/</id>
+    <id>http://ninjaside.info/blog/ru/tuning-skorosti-sqlite-v-sqlalchemy/</id>
     <updated>2013-07-30T02:33:00Z</updated>
     <published>2013-07-30T02:33:00Z</published>
-    <link href="http://localhost/blog/ru/tuning-skorosti-sqlite-v-sqlalchemy/" />
+    <link href="http://ninjaside.info/blog/ru/tuning-skorosti-sqlite-v-sqlalchemy/" />
     <content type="html">как увеличить скорость инсертов (работы) в sqlite через SQLAlchemy</content>
   </entry>
   <entry xml:base="http://localhost/feed.atom">
     <title type="text">Не забывайте про индексы</title>
-    <id>http://localhost/blog/ru/ne-zabivaite-pro-indexi/</id>
+    <id>http://ninjaside.info/blog/ru/ne-zabivaite-pro-indexi/</id>
     <updated>2013-07-17T02:33:00Z</updated>
     <published>2013-07-17T02:33:00Z</published>
-    <link href="http://localhost/blog/ru/ne-zabivaite-pro-indexi/" />
+    <link href="http://ninjaside.info/blog/ru/ne-zabivaite-pro-indexi/" />
     <content type="html">зачем нужны индексы в базе данных?</content>
   </entry>
   <entry xml:base="http://localhost/feed.atom">
     <title type="text">Несколько слов про этот блог</title>
-    <id>http://localhost/blog/ru/about-this-blog/</id>
+    <id>http://ninjaside.info/blog/ru/about-this-blog/</id>
     <updated>2013-07-13T14:51:00Z</updated>
     <published>2013-07-13T14:51:00Z</published>
-    <link href="http://localhost/blog/ru/about-this-blog/" />
+    <link href="http://ninjaside.info/blog/ru/about-this-blog/" />
     <content type="html">на чем написан этот блог и какие технологии использовались</content>
   </entry>
   <entry xml:base="http://localhost/feed.atom">
     <title type="text">Копирование файлов по ssh (scp)</title>
-    <id>http://localhost/blog/ru/kopirovanie-failov-po-ssh/</id>
+    <id>http://ninjaside.info/blog/ru/kopirovanie-failov-po-ssh/</id>
     <updated>2012-03-10T08:35:00Z</updated>
     <published>2012-03-10T08:35:00Z</published>
-    <link href="http://localhost/blog/ru/kopirovanie-failov-po-ssh/" />
+    <link href="http://ninjaside.info/blog/ru/kopirovanie-failov-po-ssh/" />
     <content type="html">копирование файлов через ssh используя утилиту scp</content>
   </entry>
   <entry xml:base="http://localhost/feed.atom">
     <title type="text">Разбить большой файл на несколько частей. Linux</title>
-    <id>http://localhost/blog/ru/kak-razbit-bolshoy-fail-na-fragmenty/</id>
+    <id>http://ninjaside.info/blog/ru/kak-razbit-bolshoy-fail-na-fragmenty/</id>
     <updated>2012-03-02T03:10:00Z</updated>
     <published>2012-03-02T03:10:00Z</published>
-    <link href="http://localhost/blog/ru/kak-razbit-bolshoy-fail-na-fragmenty/" />
+    <link href="http://ninjaside.info/blog/ru/kak-razbit-bolshoy-fail-na-fragmenty/" />
     <content type="html">как разбить большой файл на фрагменты в linux</content>
   </entry>
   <entry xml:base="http://localhost/feed.atom">
     <title type="text">ORM. Использование SQLAlchemy.</title>
-    <id>http://localhost/blog/ru/orm-ispolzovanie-sqlalchemy/</id>
+    <id>http://ninjaside.info/blog/ru/orm-ispolzovanie-sqlalchemy/</id>
     <updated>2011-05-31T02:58:00Z</updated>
     <published>2011-05-31T02:58:00Z</published>
-    <link href="http://localhost/blog/ru/orm-ispolzovanie-sqlalchemy/" />
+    <link href="http://ninjaside.info/blog/ru/orm-ispolzovanie-sqlalchemy/" />
     <content type="html">Использование SQLAlchemy для работы с реляционными базами данных.</content>
   </entry>
   <entry xml:base="http://localhost/feed.atom">
     <title type="text">Генетические алгоритмы. Hello World.</title>
-    <id>http://localhost/blog/ru/geneticheskie-algoritmy-hello-world/</id>
+    <id>http://ninjaside.info/blog/ru/geneticheskie-algoritmy-hello-world/</id>
     <updated>2011-05-08T23:16:00Z</updated>
     <published>2011-05-08T23:16:00Z</published>
-    <link href="http://localhost/blog/ru/geneticheskie-algoritmy-hello-world/" />
+    <link href="http://ninjaside.info/blog/ru/geneticheskie-algoritmy-hello-world/" />
     <content type="html">Hello world с помощью генетических алгоритмов (python).</content>
   </entry>
   <entry xml:base="http://localhost/feed.atom">
     <title type="text">Типы данных, основные конструкции. Python.</title>
-    <id>http://localhost/blog/ru/tipy-dannyx-osnovnye-konstrukcii-python/</id>
+    <id>http://ninjaside.info/blog/ru/tipy-dannyx-osnovnye-konstrukcii-python/</id>
     <updated>2010-11-25T01:17:00Z</updated>
     <published>2010-11-25T01:17:00Z</published>
-    <link href="http://localhost/blog/ru/tipy-dannyx-osnovnye-konstrukcii-python/" />
+    <link href="http://ninjaside.info/blog/ru/tipy-dannyx-osnovnye-konstrukcii-python/" />
     <content type="html">типы данны и основные конструкции языка Python.</content>
   </entry>
   <entry xml:base="http://localhost/feed.atom">
     <title type="text">Функции map и zip и lambda. Python</title>
-    <id>http://localhost/blog/ru/funkcii-map-i-zip-i-lambda-python/</id>
+    <id>http://ninjaside.info/blog/ru/funkcii-map-i-zip-i-lambda-python/</id>
     <updated>2010-11-17T09:47:00Z</updated>
     <published>2010-11-17T09:47:00Z</published>
-    <link href="http://localhost/blog/ru/funkcii-map-i-zip-i-lambda-python/" />
+    <link href="http://ninjaside.info/blog/ru/funkcii-map-i-zip-i-lambda-python/" />
     <content type="html">Немного про функциональное программирование на Python.</content>
   </entry>
   <entry xml:base="http://localhost/feed.atom">
     <title type="text">Получить случайную последовательности из списка.</title>
-    <id>http://localhost/blog/ru/poluchit-sluchainuiy-posledovatelnost/</id>
+    <id>http://ninjaside.info/blog/ru/poluchit-sluchainuiy-posledovatelnost/</id>
     <updated>2010-11-13T08:03:00Z</updated>
     <published>2010-11-13T08:03:00Z</published>
-    <link href="http://localhost/blog/ru/poluchit-sluchainuiy-posledovatelnost/" />
+    <link href="http://ninjaside.info/blog/ru/poluchit-sluchainuiy-posledovatelnost/" />
     <content type="html">получить случайную последовательность произвольной длины из списка с заданной вероятностью</content>
   </entry>
   <entry xml:base="http://localhost/feed.atom">
     <title type="text">Хранение настроек для проекта на Python.</title>
-    <id>http://localhost/blog/ru/xranenie-nastroek-python/</id>
+    <id>http://ninjaside.info/blog/ru/xranenie-nastroek-python/</id>
     <updated>2010-11-10T05:48:00Z</updated>
     <published>2010-11-10T05:48:00Z</published>
-    <link href="http://localhost/blog/ru/xranenie-nastroek-python/" />
+    <link href="http://ninjaside.info/blog/ru/xranenie-nastroek-python/" />
     <content type="html">Хранение настроек для проекта. Функция getattr.</content>
   </entry>
   <entry xml:base="http://localhost/feed.atom">
     <title type="text">100 Гигабит ДДос</title>
-    <id>http://localhost/blog/ru/100gigabit-ddos/</id>
+    <id>http://ninjaside.info/blog/ru/100gigabit-ddos/</id>
     <updated>2010-10-26T05:31:00Z</updated>
     <published>2010-10-26T05:31:00Z</published>
-    <link href="http://localhost/blog/ru/100gigabit-ddos/" />
+    <link href="http://ninjaside.info/blog/ru/100gigabit-ddos/" />
     <content type="html">Скажите, Вы когда-нибудь сталкивались со 100 гигабитной атакой на подсеть?</content>
   </entry>
 </feed>
